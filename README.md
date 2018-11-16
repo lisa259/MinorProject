@@ -6,4 +6,9 @@ data-analyse en dergelijke.
 Het idee is dat de gebruiker dan opties kan aangeven wat voor data in welke kolommen staat, en kan aangeven wat voor soort resultaten 
 en toetsen de app moet teruggeven/uitvoeren.
 
+Ik verwacht dat er een hoop mensen/bedrijven zijn die data hebben dat geanalyseerd moet worden, en zelf geen idee hebben hoe ze dit
+het best kunnen aanpakken.
+
 Dit idee is nog erg pril en moet nog erg doordacht en uitgewerkt worden.
+
+De app kan vergeleken worden met het programma R.
