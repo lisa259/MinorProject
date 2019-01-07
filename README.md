@@ -8,7 +8,7 @@ De behoefte aan advies van anderen. Een nieuwe blik op de kleding die je bezit.
 ## Solution
 Deze app geeft gebruikers de mogelijkheid om  hun garderobe te uploaden, deze te delen met vrienden en elkaar zo adviezen te geven over bijvoorbeeld het samenstellen van een outfit en ideeën te delen over bijvoorbeeld het aanschaffen van een nieuw item.  
   
-  
+![img](https://github.com/lisa259/MinorProject/blob/master/doc/project.png)  
   
 Onderdelen van de app:  
   - Account creeëren 
