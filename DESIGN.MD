@@ -7,7 +7,29 @@ Lisa Beek. 12441392
 ## Diagrams
 ![img](https://github.com/lisa259/MinorProject/blob/master/doc/schematisch.png)
 
-## APIs
-Firebase
+## APIs  
+Firebase  
 
-## Database Tables
+## Database Tables   
+Gebruiker:  
+- email  
+- gebruikersnaam 
+- wachtwoord  
+- profielfoto  
+  
+Kledingitems:  
+- item ID  
+- gebruikersnaam  
+- categorie  
+- foto  
+- kleur  
+- merk  
+- garderobe of wishlist?  
+  
+Lookbook:
+- Outfit ID  
+- Item ID  
+
+Vrienden:  
+- Gebruikersnaam1  
+- Gebruikersnaam2  
