@@ -15,8 +15,8 @@ Onderdelen van de app:
   - Items garderobe toevoegen/aanpassen/verwijderen 
   - Gewenste items toevoegen 
   - Lookbook maken met bezitte en gewenste items 
-  - Vrienden worden met andere gebruikers 
-  - Bekijken garderobe, gewenste items en lookbooks van vrienden 
+  - Vrienden worden met andere gebruikers (Optioneel)
+  - Bekijken garderobe, gewenste items en lookbooks van vrienden (Optioneel)
   - Lookbook maken voor vrienden (met de bezitte en gewenste item van vriend)  (Optioneel) 
   - Items aanraden aan vrienden   (Optioneel) 
    
@@ -25,7 +25,7 @@ Onderdelen van de app:
 Jpg bestanden  
   
 ### External components
-SQL database
+SQL database: firebase
 
 ### Similar apps 
 De app ClosetSpace is een vergelijkbare app. Deze app geeft je onder andere de mogelijkheid kledingitems toe te voegen aan je online garderobe, outfits te maken en outfits te koppelen aan datums. Deze app geeft geen mogelijkheid om vrienden te worden met andere gebruikers. Wel heeft deze app opties die mijn app vooralsnog niet gaat bevatten, zoals de gemiddelde kosten per keer dat je een item draagt en het archiveren van kledingstukken die je tijdelijk niet draagt. Deze opties zouden als inspiratie kunnen dienen mocht ik nog meer willen toevoegen aan mijn app.
