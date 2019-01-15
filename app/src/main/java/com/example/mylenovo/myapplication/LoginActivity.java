@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback {
 
     LoginHelper request;
 
@@ -18,12 +18,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         request = new LoginHelper(this);
-        request.getLogins(this);
     }
 
     @Override
-    public void gotLogins(JSONArray scores) {
-        // do something
+    public void gotLogins(JSONArray logins) {
+        // Check of ingevoerde gegevens overeenkomen met 1 van de logingegevens
+        // ieder item in array afgaan
+        // match: gebruikersnaam opslaan, intent
+        // geen match:
+
+        Intent intent = new Intent(this, garderobeActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -34,8 +39,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void ClickLogin(View v){
-        Intent intent = new Intent(this, garderobeActivity.class);
-        startActivity(intent);
+        // Is er iets ingevuld?
+        // ja:
+        request.getLogins(this);
+        // nee: toast
+
     }
 
     public void ClickAanmelden1(View v){

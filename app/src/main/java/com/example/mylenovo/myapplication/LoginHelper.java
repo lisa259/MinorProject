@@ -109,6 +109,84 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
     //    void getLogins(LoginHelper.Callback inputActivity) {
 //        this.activity = inputActivity;
 //        queue = Volley.newRequestQueue(context);
+//.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
 //        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
 //        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
 //                null, this, this);
@@ -186,5 +264,19 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
 //                null, this, this);
 //        queue.add(jsonObjectRequest);
 //    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+//                null, this, this);
+//        queue.add(jsonObjectRequest);
+//    }
+    //    void getLogins(LoginHelper.Callback inputActivity) {
+//        this.activity = inputActivity;
+//        queue = Volley.newRequestQueue(context);
+//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+
 
 }
