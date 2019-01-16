@@ -12,6 +12,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginHelper implements Response.Listener<JSONArray>, Response.ErrorListener {
 
     private Context context;
@@ -49,6 +52,35 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
         activity.gotLogins(response);
     }
 
+
+
+    public void postLogins(final String gebruikersnaam, final String email, final String wachtwoord) {
+        queue = Volley.newRequestQueue(context);
+        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // response
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // error
+            }
+        }
+        ){  @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> data = new HashMap<>();
+
+                data.put("gebruikersnaam", gebruikersnaam);
+                data.put("email", email);
+                data.put("wachtwoord", wachtwoord);
+
+                return data;
+            }
+        };
+        queue.add(postRequest);
+    }
 
 //    void getLogins(LoginHelper.Callback inputActivity) {
 //        this.activity = inputActivity;
@@ -174,7 +206,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
 //        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
 //        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
 //                null, this, this);
-//        queue.add(jsonObjectRequest);
+
 //    }
     //    void getLogins(LoginHelper.Callback inputActivity) {
 //        this.activity = inputActivity;
@@ -252,31 +284,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
 //        this.activity = inputActivity;
 //        queue = Volley.newRequestQueue(context);
 //        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
-//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
-//                null, this, this);
-//        queue.add(jsonObjectRequest);
-//    }
-    //    void getLogins(LoginHelper.Callback inputActivity) {
-//        this.activity = inputActivity;
-//        queue = Volley.newRequestQueue(context);
-//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
-//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
-//                null, this, this);
-//        queue.add(jsonObjectRequest);
-//    }
-    //    void getLogins(LoginHelper.Callback inputActivity) {
-//        this.activity = inputActivity;
-//        queue = Volley.newRequestQueue(context);
-//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
-//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
-//                null, this, this);
-//        queue.add(jsonObjectRequest);
-//    }
-    //    void getLogins(LoginHelper.Callback inputActivity) {
-//        this.activity = inputActivity;
-//        queue = Volley.newRequestQueue(context);
-//        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
-//        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
+
 
 
 }

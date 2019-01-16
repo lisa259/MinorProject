@@ -4,13 +4,18 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback {
 
     LoginHelper request;
+    String gebruikersnaam;
+    String wachtwoord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +29,20 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
     public void gotLogins(JSONArray logins) {
         // Check of ingevoerde gegevens overeenkomen met 1 van de logingegevens
         // ieder item in array afgaan
-        // match: gebruikersnaam opslaan, intent
-        // geen match:
+        for (int i = 0; i < logins.length(); i++){
+            try {
+                JSONObject item = logins.getJSONObject(i);
+                if ((gebruikersnaam.equals(item.getString("gebruikersnaam")) || gebruikersnaam.equals(item.getString("email"))) && wachtwoord.equals(item.getString("wachtwoord"))) {
 
-        Intent intent = new Intent(this, garderobeActivity.class);
-        startActivity(intent);
+                    // OPSLAAN INGELOGDE GEBRUIKER!
+                    Intent intent = new Intent(this, garderobeActivity.class);
+                    startActivity(intent);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        Toast.makeText(this, "Inloggegevens kloppen niet", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -40,9 +54,16 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
 
     public void ClickLogin(View v){
         // Is er iets ingevuld?
-        // ja:
-        request.getLogins(this);
-        // nee: toast
+        EditText ETgebruikersnaam = (EditText) findViewById(R.id.ETgebruikersnaam);
+        EditText ETwachtwoord = (EditText) findViewById(R.id.ETwachtwoord);
+        gebruikersnaam = ETgebruikersnaam.getText().toString();
+        wachtwoord = ETwachtwoord.getText().toString();
+
+        if (!gebruikersnaam.isEmpty() && !wachtwoord.isEmpty()){
+            request.getLogins(this);
+        } else {
+            Toast.makeText(this, "Voer eerst alle gegevens in", Toast.LENGTH_LONG).show();
+        }
 
     }
 
