@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="4"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <TextView
@@ -20,13 +20,24 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_weight="1"
-            android:text="Garderobe"
+            android:text="         Garderobe"
             android:textAlignment="center"
             android:textSize="28dp"
             android:textStyle="bold" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/FBNieuwItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0.01"
+            android:clickable="true"
+            android:onClick="ClickNieuwItem"
+            app:backgroundTint="?attr/colorBackgroundFloating"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/FBInstellingen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.01"
@@ -37,17 +48,24 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/LVGarderobe"
+    <Spinner
+        android:id="@+id/SPCategorie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1" />
+
+    <GridView
+        android:id="@+id/GVGarderobe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.35"
+        android:numColumns="2" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="4"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Button

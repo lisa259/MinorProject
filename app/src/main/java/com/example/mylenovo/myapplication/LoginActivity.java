@@ -1,6 +1,9 @@
 package com.example.mylenovo.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +38,11 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                 if ((gebruikersnaam.equals(item.getString("gebruikersnaam")) || gebruikersnaam.equals(item.getString("email"))) && wachtwoord.equals(item.getString("wachtwoord"))) {
 
                     // OPSLAAN INGELOGDE GEBRUIKER!
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("gebruikersnaam", gebruikersnaam);
+                    editor.commit();
+
                     Intent intent = new Intent(this, garderobeActivity.class);
                     startActivity(intent);
                 }
@@ -42,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                 e.printStackTrace();
             }
         }
+        // WORDT ALTIJD GETOAST.... OOKAL KLOPT HET WEL, NOG EVEN FIXEN!
         Toast.makeText(this, "Inloggegevens kloppen niet", Toast.LENGTH_LONG).show();
     }
 

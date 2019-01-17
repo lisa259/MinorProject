@@ -23,7 +23,6 @@
         <activity android:name=".WishlistActivity" />
         <activity android:name=".vriendenActivity" />
         <activity android:name=".LookbookActivity" />
-        <activity android:name=".CategorieActivity" />
         <activity android:name=".NieuwItemActivity" />
         <activity android:name=".VriendToevoegenActivity" />
         <activity android:name=".OutfitActivity" />

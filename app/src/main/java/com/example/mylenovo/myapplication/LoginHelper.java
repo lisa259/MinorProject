@@ -43,7 +43,6 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        // No scores found
         activity.gotLoginsError(error.getMessage());
     }
 

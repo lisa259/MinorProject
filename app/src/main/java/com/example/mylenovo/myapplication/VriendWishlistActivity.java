@@ -42,7 +42,7 @@ public class VriendWishlistActivity extends AppCompatActivity {
     private class ClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent = new Intent(VriendWishlistActivity.this, CategorieActivity.class);
+            Intent intent = new Intent(VriendWishlistActivity.this, ItemActivity.class);
             startActivity(intent);
         }
     }
