@@ -73,6 +73,8 @@ public class NieuwItemActivity extends AppCompatActivity {
             Toast.makeText(this, "Voer merk in", Toast.LENGTH_LONG).show();
         }
 
+        // NOG CHECKEN OF URI NIET LEEG IS  >?  if (!Uri.EMPTY.equals(followUri))
+
         // convert Uri to bitmap
         try {
             Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
@@ -86,6 +88,8 @@ public class NieuwItemActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
+
+        // ALLEEN POSTEN ALS NIKS LEEG IS
 
         // LOCATIE NU HARDCODED, MOET NOG VARIABEL WORDEN MET INTENT
         request.postItems(gebruikersnaam, categorie, fotoString, merk, "garderobe");
