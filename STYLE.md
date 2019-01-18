@@ -19,6 +19,7 @@ Do not left logs in the code for the final product.
 
 ### Comments
 Block comments are indented at the same level as the surrounding code. They may be in /* ... */ style or // ... style. For multi-line /* ... */ comments, subsequent lines must start with * aligned with the * on the previous line.
++ header comments.
 
 ### Not used code
 Do not left code in your final product that is not used anymore.
