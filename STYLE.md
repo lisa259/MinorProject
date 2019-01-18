@@ -13,6 +13,7 @@ A single blank line may also appear anywhere it improves readability, for exampl
 
 ### Error handling
 Pop-up to a user when an error occurs, do not ignore any error that occurs.
+ook een toast bij try catch
 
 ### No unnecessary logs
 Do not left logs in the code for the final product.
