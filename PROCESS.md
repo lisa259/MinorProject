@@ -10,7 +10,7 @@ Poging tot het gebruiken van firebase
 # dag 4 (maandag)  
 van firebase overstappen op rester.py, want dit werd aangeraden.  
 Beslissing hoe ik rester ga indelen. Besluit: voor iedere table in de database een aparte link(/). Bijvoorbeeld serverlink.nl/login,  
-serverlink.nl/kledingitems.  
+serverlink.nl/kledingitems.  Kwam erachter dat android studio niet goed gepushed was naar github, dus pas vanaf vandaag goed geupload.
   
 # dag 5 (dinsdag)  
 Start helper class voor login/aanmeldenactivity. GetRequests voor https://ide50-lisabeek.legacy.cs50.io:8080/login.  
