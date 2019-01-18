@@ -25,7 +25,9 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
     GarderobeHelper request;
     String gebruikersnaam;
     Spinner SPCategorie;
+    String categorie;
     ArrayList<String> categorieen;
+    Boolean first = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +48,39 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
     public void gotItems(JSONArray items) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
-        // Alle categorieen van gebruiker verzamelen
-        categorieen = new ArrayList<>();
-        for (int i = 0; i < items.length(); i++) {
-            try {
-                JSONObject item = items.getJSONObject(i);
-                // geen dubbele categorieen
-                if (!categorieen.contains(item.getString("categorie")) && gebruikersnaam.equals(item.getString("gebruikersnaam"))) {
-                    categorieen.add(item.getString("categorie"));
+
+        if (first) {
+            // Alle categorieen van gebruiker verzamelen
+            categorieen = new ArrayList<>();
+            for (int i = 0; i < items.length(); i++) {
+                try {
+                    JSONObject item = items.getJSONObject(i);
+                    // geen dubbele categorieen
+                    if (!categorieen.contains(item.getString("categorie")) && gebruikersnaam.equals(item.getString("gebruikersnaam"))) {
+                        categorieen.add(item.getString("categorie"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch(JSONException e) {
-                e.printStackTrace();
+            }
+
+            // spinner vullen
+            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categorieen);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            SPCategorie.setAdapter(adapter);
+        } else {
+            for (int i = 0; i < items.length(); i++) {
+                try {
+                    JSONObject item = items.getJSONObject(i);
+                    // alle items uit geselecteerde categorie
+                    if (!categorieen.contains(item.getString("categorie")) && gebruikersnaam.equals(item.getString("gebruikersnaam"))) {
+                        categorieen.add(item.getString("categorie"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        // spinner vullen
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categorieen);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        SPCategorie.setAdapter(adapter);
     }
 
     @Override
@@ -100,10 +118,13 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
         @Override
         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             // vul gridview met alle items in selecteerde categorie
+            Toast.makeText(garderobeActivity.this, "select", Toast.LENGTH_LONG).show();
+            categorie = SPCategorie.getSelectedItem().toString();
         }
         @Override
         public void onNothingSelected(AdapterView<?> parentView) {
-            // leeg gridview
+            // doe niets
+            Toast.makeText(garderobeActivity.this, "non", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/IVitem"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp" />
 
@@ -33,6 +33,15 @@
         android:layout_marginBottom="15dp"
         android:onClick="ClickUpload2"
         android:text="Upload foto" />
+
+    <EditText
+        android:id="@+id/ETCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="Categorie"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/ETMerk"
