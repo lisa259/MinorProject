@@ -25,6 +25,9 @@ Bij de garderobe de schermen met categorieën en items samenvoegen. Want als de 
 dan kan er dus niet doorgeklikt worden naar de items. Terwijl je op dit moment pas in het item scherm een  
 nieuw item kan toevoegen. Dus het plan is nu om in activity_garderobe een spinner te implementeren die alle categorieen bevat,   
 met daaronder een gridview met alle items uit de geselecteerde categorie. Daarnaast komt er een + knop rechtsboven in het   
-scherm om via daar nieuwe items(en eventueel een nieuwe categorie) toe te voegen ipv dat hieronderaan het scherm een knop voor is.
+scherm om via daar nieuwe items(en eventueel een nieuwe categorie) toe te voegen ipv dat hieronderaan het scherm een knop voor is.  
+  
+# dag 8 (vrijdag)  
+image uploaden van gallerij als Uri. dit omzetten naar bitmap, vervolgens met base64 naar string, zodat het opgeslagen kan worden op de server.
 
 
