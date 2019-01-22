@@ -32,6 +32,7 @@ image uploaden van gallerij als Uri. dit omzetten naar bitmap, vervolgens met ba
   
 # dag 9 (maandag)  
 Bij decoden van de Base64-string. gebruikmaken van byte[] decoded = Base64.decode(fotoString, Base64.URL_SAFE) ipv byte[] decoded = Base64.decode(fotoString, Base64.DEFAULT), want dit schijnt problemen, die veroorzaakt kunnen worden omdat er met JSON wordt gewerkt, te voorkomen.  
+https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview  
   
 # dag 10 (dinsdag)  
 
