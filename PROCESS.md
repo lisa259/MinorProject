@@ -28,6 +28,11 @@ met daaronder een gridview met alle items uit de geselecteerde categorie. Daarna
 scherm om via daar nieuwe items(en eventueel een nieuwe categorie) toe te voegen ipv dat hieronderaan het scherm een knop voor is.  
   
 # dag 8 (vrijdag)  
-image uploaden van gallerij als Uri. dit omzetten naar bitmap, vervolgens met base64 naar string, zodat het opgeslagen kan worden op de server.
+image uploaden van gallerij als Uri. dit omzetten naar bitmap, vervolgens met base64 naar string, zodat het opgeslagen kan worden op de server.  
+  
+# dag 9 (maandag)  
+Bij decoden van de Base64-string. gebruikmaken van byte[] decoded = Base64.decode(fotoString, Base64.URL_SAFE) ipv byte[] decoded = Base64.decode(fotoString, Base64.DEFAULT), want dit schijnt problemen, die veroorzaakt kunnen worden omdat er met JSON wordt gewerkt, te voorkomen.  
+  
+# dag 10 (dinsdag)  
 
 
