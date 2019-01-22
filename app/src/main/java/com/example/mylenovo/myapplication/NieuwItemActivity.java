@@ -75,7 +75,7 @@ public class NieuwItemActivity extends AppCompatActivity {
 
         // NOG CHECKEN OF URI NIET LEEG IS  >?  if (!Uri.EMPTY.equals(followUri))
 
-        // convert Uri to bitmap
+        // convert Uri to bitmap to string
         try {
             Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -94,24 +94,5 @@ public class NieuwItemActivity extends AppCompatActivity {
         // LOCATIE NU HARDCODED, MOET NOG VARIABEL WORDEN MET INTENT
         request.postItems(gebruikersnaam, categorie, fotoString, merk, "garderobe");
         onBackPressed();
-
-//        try {
-//            Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//            byte[] b = baos.toByteArray();
-//            fotoString = Base64.encodeToString(b, Base64.URL_SAFE | Base64.NO_WRAP);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        //        try {
-//            Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//            byte[] b = baos.toByteArray();
-//            fotoString = Base64.encodeToString(b, Base64.URL_SAFE | Base64.NO_WRAP);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 }
