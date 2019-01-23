@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class garderobeActivity extends AppCompatActivity implements GarderobeHelper.Callback  {
+public class GarderobeActivity extends AppCompatActivity implements GarderobeHelper.Callback  {
 
     GridView GVGarderobe;
     GarderobeHelper request;
@@ -35,7 +36,8 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
         setContentView(R.layout.activity_garderobe);
 
         GVGarderobe = (GridView) findViewById(R.id.GVGarderobe);
-        GVGarderobe.setOnItemClickListener(new EntryClickListener());
+        GVGarderobe.setOnItemClickListener(new ItemClickListener());
+        GVGarderobe.setOnItemLongClickListener(new ItemLongClickListener());
 
         SPCategorie = (Spinner) findViewById(R.id.SPCategorie);
         SPCategorie.setOnItemSelectedListener(new SpinnerClickListener());
@@ -73,6 +75,7 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
 
         // Wanneer er een categorie geselecteerd is in de spinner
         } else {
+            Log.d("zoeken", "1: else");
             ArrayList<GridFotoItem> itemsList = new ArrayList<>();
             for (int i = 0; i < items.length(); i++) {
                 try {
@@ -80,15 +83,17 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
                     // alle items uit geselecteerde categorie
                     if (selectCategorie.equals(item.getString("categorie")) && gebruikersnaam.equals(item.getString("gebruikersnaam")) && item.getString("locatie").equals("garderobe")) {
                         // object maken en toevoegen aan lijst
-                        itemsList.add(new GridFotoItem(item.getString("gebruikersnaam"), item.getString("categorie"), item.getString("foto"), item.getString("merk"), item.getString("locatie")));
+                        itemsList.add(new GridFotoItem(item.getInt("id"), item.getString("gebruikersnaam"), item.getString("categorie"), item.getString("foto"), item.getString("merk"), item.getString("locatie")));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+            Log.d("zoeken", "2: objects gemaakt");
             // Lijst toekennen aan adapter
             GridFotoAdapter adapter = new GridFotoAdapter(this, R.layout.grid_foto, itemsList);
             GVGarderobe.setAdapter(adapter);
+            Log.d("zoeken", "3: adapter geset");
         }
     }
 
@@ -105,6 +110,7 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
 
     public void ClickNieuwItem(View v){
         Intent intent = new Intent(this, NieuwItemActivity.class);
+        intent.putExtra("locatie", "garderobe");
         startActivity(intent);
     }
 
@@ -127,21 +133,39 @@ public class garderobeActivity extends AppCompatActivity implements GarderobeHel
         @Override
         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             // vul gridview met alle items in selecteerde categorie
-            Toast.makeText(garderobeActivity.this, "select", Toast.LENGTH_LONG).show();
+            Toast.makeText(GarderobeActivity.this, "select", Toast.LENGTH_LONG).show();
             selectCategorie = SPCategorie.getSelectedItem().toString();
+            request.getItems(GarderobeActivity.this);
+
         }
         @Override
         public void onNothingSelected(AdapterView<?> parentView) {
             // doe niets
-            Toast.makeText(garderobeActivity.this, "non", Toast.LENGTH_LONG).show();
+            Toast.makeText(GarderobeActivity.this, "non", Toast.LENGTH_LONG).show();
         }
     }
 
-    private class EntryClickListener implements AdapterView.OnItemClickListener {
+    private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent = new Intent(garderobeActivity.this, ItemActivity.class);
+            GridFotoItem item = (GridFotoItem) adapterView.getItemAtPosition(i);
+
+            Intent intent = new Intent(GarderobeActivity.this, ItemActivity.class);
+            intent.putExtra("item", item);
             startActivity(intent);
+        }
+    }
+
+    private class ItemLongClickListener implements AdapterView.OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Log.d("zoeken", "4: long click");
+            GridFotoItem item = (GridFotoItem) adapterView.getItemAtPosition(i);
+            int id = item.getId();
+            // verwijder geselecteerde item
+            request.deleteItems(id);
+            // update gridview en spinner?
+            return true;
         }
     }
 }

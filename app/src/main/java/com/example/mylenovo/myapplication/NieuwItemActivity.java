@@ -29,11 +29,15 @@ public class NieuwItemActivity extends AppCompatActivity {
     String merk;
     String categorie;
     String fotoString;
+    String locatie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nieuw_item);
+
+        Intent intent = getIntent();
+        locatie = intent.getStringExtra("locatie");
 
         IVItem = (ImageView) findViewById(R.id.IVitem);
         ETMerk = (EditText) findViewById(R.id.ETMerk);
@@ -90,9 +94,8 @@ public class NieuwItemActivity extends AppCompatActivity {
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
 
         // ALLEEN POSTEN ALS NIKS LEEG IS
-
-        // LOCATIE NU HARDCODED, MOET NOG VARIABEL WORDEN MET INTENT
-        request.postItems(gebruikersnaam, categorie, fotoString, merk, "garderobe");
+        
+        request.postItems(gebruikersnaam, categorie, fotoString, merk, locatie);
         onBackPressed();
     }
 }

@@ -3,6 +3,7 @@ package com.example.mylenovo.myapplication;
 import java.io.Serializable;
 
 public class GridFotoItem implements Serializable {
+    private int id;
     private String gebruikersnaam;
     private String categorie;
     private String foto;
@@ -10,7 +11,8 @@ public class GridFotoItem implements Serializable {
     private String locatie;
 
     // Constructor
-    public GridFotoItem(String gebruikersnaam, String categorie, String foto, String merk, String locatie) {
+    public GridFotoItem(int id, String gebruikersnaam, String categorie, String foto, String merk, String locatie) {
+        this.id = id;
         this.gebruikersnaam = gebruikersnaam;
         this.categorie = categorie;
         this.foto = foto;
@@ -19,6 +21,11 @@ public class GridFotoItem implements Serializable {
     }
 
     // Getters
+
+    public int getId() {
+        return id;
+    }
+
     public String getGebruikersnaam() { return gebruikersnaam; }
 
     public String getCategorie() {

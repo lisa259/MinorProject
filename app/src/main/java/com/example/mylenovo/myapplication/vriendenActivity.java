@@ -25,7 +25,7 @@ public class vriendenActivity extends AppCompatActivity {
     }
 
     public void ClickGarderobe(View v){
-        Intent intent = new Intent(this, garderobeActivity.class);
+        Intent intent = new Intent(this, GarderobeActivity.class);
         startActivity(intent);
     }
 

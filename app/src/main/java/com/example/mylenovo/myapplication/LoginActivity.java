@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                     // OPSLAAN INGELOGDE GEBRUIKER!
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("gebruikersnaam", gebruikersnaam);
+                    editor.putString("gebruikersnaam", item.getString("gebruikersnaam"));
                     editor.commit();
 
                     Intent intent = new Intent(this, garderobeActivity.class);

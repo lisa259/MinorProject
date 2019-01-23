@@ -32,7 +32,8 @@
         <activity android:name=".VriendGarderobeActivity" />
         <activity android:name=".VriendWishlistActivity" />
         <activity android:name=".VriendVriendenActivity" />
-        <activity android:name=".VriendLookbookActivity"></activity>
+        <activity android:name=".VriendLookbookActivity" />
+        <activity android:name=".AanpassenItemActivity"></activity>
     </application>
 
 </manifest>
