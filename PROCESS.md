@@ -35,5 +35,11 @@ Bij decoden van de Base64-string. gebruikmaken van byte[] decoded = Base64.decod
 https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview  
   
 # dag 10 (dinsdag)  
+Verwijderen van een kledingitem door deze lang aan te klikken in de garderobe ipv door een verwijder-knop in activity_item.xml.  
+  
+# dag 11 (woensdag)  
+De knop in activiry_item_xml veranderen van verwijderen naar aanpassen.  
+
+Besloten om de vrienden functie weg te laten, dit zal teveel werk worden. Hierdoor vervallen verschillende extra functies.
 
 
