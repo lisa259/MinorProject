@@ -111,4 +111,33 @@ public class GarderobeHelper implements Response.Listener<JSONArray>, Response.E
         };
         queue.add(deleteRequest);
     }
+
+    public void putItems(int id, final  String gebruikersnaam, final String categorie, final String merk, final String foto, final String locatie){
+        queue = Volley.newRequestQueue(context);
+        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items/" + Integer.toString(id);
+        StringRequest putRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // response
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // error
+            }
+        }
+        ){  @Override
+            public Map<String, String> getParams() {
+                Map<String, String> data = new HashMap<String, String>();
+                //data.put("gebruikersnaam", gebruikersnaam);
+                data.put("categorie", categorie);
+                data.put("merk", merk);
+                data.put("foto", foto);
+                //data.put("locatie", locatie);
+
+                return data;
+            }
+        };
+        queue.add(putRequest);
+    }
 }

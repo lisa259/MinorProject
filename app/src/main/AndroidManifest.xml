@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistreerActivity" />
-        <activity android:name=".garderobeActivity" />
+        <activity android:name=".GarderobeActivity" />
         <activity android:name=".WishlistActivity" />
         <activity android:name=".vriendenActivity" />
         <activity android:name=".LookbookActivity" />

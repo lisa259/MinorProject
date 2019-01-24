@@ -21,7 +21,7 @@ public class VriendLookbookActivity extends AppCompatActivity {
     }
 
     public void ClickHome(View v){
-        Intent intent = new Intent(this, garderobeActivity.class);
+        Intent intent = new Intent(this, GarderobeActivity.class);
         startActivity(intent);
     }
 

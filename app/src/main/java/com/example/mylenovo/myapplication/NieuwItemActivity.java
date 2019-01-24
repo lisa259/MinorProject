@@ -24,7 +24,7 @@ public class NieuwItemActivity extends AppCompatActivity {
     EditText ETCategorie;
     GarderobeHelper request;
     private static final int PICK_IMAGE = 100;
-    Uri imageUri;
+    Uri imageUri = null;
     String gebruikersnaam;
     String merk;
     String categorie;
@@ -77,7 +77,10 @@ public class NieuwItemActivity extends AppCompatActivity {
             Toast.makeText(this, "Voer merk in", Toast.LENGTH_LONG).show();
         }
 
-        // NOG CHECKEN OF URI NIET LEEG IS  >?  if (!Uri.EMPTY.equals(followUri))
+        // NOG CHECKEN OF URI NIET LEEG IS
+        if (imageUri == null) {
+            Toast.makeText(this, "Voeg foto toe", Toast.LENGTH_LONG).show();
+        }
 
         // convert Uri to bitmap to string
         try {
@@ -94,7 +97,7 @@ public class NieuwItemActivity extends AppCompatActivity {
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
 
         // ALLEEN POSTEN ALS NIKS LEEG IS
-        
+
         request.postItems(gebruikersnaam, categorie, fotoString, merk, locatie);
         onBackPressed();
     }

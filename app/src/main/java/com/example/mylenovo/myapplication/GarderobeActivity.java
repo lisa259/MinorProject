@@ -34,6 +34,7 @@ public class GarderobeActivity extends AppCompatActivity implements GarderobeHel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garderobe);
+        Log.d("zoeken", "start oncreate garderobe");
 
         GVGarderobe = (GridView) findViewById(R.id.GVGarderobe);
         GVGarderobe.setOnItemClickListener(new ItemClickListener());

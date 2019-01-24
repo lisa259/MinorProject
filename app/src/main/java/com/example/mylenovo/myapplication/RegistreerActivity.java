@@ -74,7 +74,7 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
         if (bruikbaar) {
             // toevoegen aan server mbv post request
             request.postLogins(gebruikersnaam, email, wachtwoord1);
-            Intent intent = new Intent(this, garderobeActivity.class);
+            Intent intent = new Intent(this, GarderobeActivity.class);
             startActivity(intent);
         }
     }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,8 +44,11 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                     editor.putString("gebruikersnaam", item.getString("gebruikersnaam"));
                     editor.commit();
 
-                    Intent intent = new Intent(this, garderobeActivity.class);
+                    Log.d("zoeken", "login voor intent");
+                    Intent intent = new Intent(this, GarderobeActivity.class);
+                    Log.d("zoeken", "login tussen intent");
                     startActivity(intent);
+                    Log.d("zoeken", "login na intent");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
