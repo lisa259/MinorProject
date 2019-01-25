@@ -16,7 +16,7 @@ public class OutfitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outfit);
         GVOutfit = (GridView) findViewById(R.id.GVOutfit);
-        GVOutfit.setOnItemClickListener(new EntryClickListener());
+        GVOutfit.setOnItemClickListener(new ItemClickListener());
     }
 
     public void ClickPlus2(View v){
@@ -29,7 +29,7 @@ public class OutfitActivity extends AppCompatActivity {
         onBackPressed();
     }
 
-    private class EntryClickListener implements AdapterView.OnItemClickListener {
+    private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(OutfitActivity.this, ItemActivity.class);

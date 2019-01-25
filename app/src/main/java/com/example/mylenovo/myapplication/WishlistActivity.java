@@ -19,18 +19,8 @@ public class WishlistActivity extends AppCompatActivity {
         GVWishlist.setOnItemClickListener(new ClickListener());
     }
 
-    public void ClickInstellingen(View v){
-        Intent intent = new Intent(this, InstellingenActivity.class);
-        startActivity(intent);
-    }
-
     public void ClickGarderobe(View v){
         Intent intent = new Intent(this, GarderobeActivity.class);
-        startActivity(intent);
-    }
-
-    public void ClickVrienden(View v){
-        Intent intent = new Intent(this, vriendenActivity.class);
         startActivity(intent);
     }
 

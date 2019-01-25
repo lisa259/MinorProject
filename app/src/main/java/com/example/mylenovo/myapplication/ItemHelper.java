@@ -3,6 +3,7 @@ package com.example.mylenovo.myapplication;
 // HEADERS MET COMMENTS!
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -19,10 +20,10 @@ import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GarderobeHelper implements Response.Listener<JSONArray>, Response.ErrorListener {
+public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorListener {
 
     private Context context;
-    private GarderobeHelper.Callback activity;
+    private ItemHelper.Callback activity;
     RequestQueue queue;
 
     public interface Callback {
@@ -31,12 +32,12 @@ public class GarderobeHelper implements Response.Listener<JSONArray>, Response.E
     }
 
     // Constructor
-    public GarderobeHelper (Context inputContext) {
+    public ItemHelper (Context inputContext) {
         this.context = inputContext;
     }
 
     // Get Items from url. Using interface Callback
-    void getItems(GarderobeHelper.Callback inputActivity) {
+    void getItems(ItemHelper.Callback inputActivity) {
         this.activity = inputActivity;
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items";
@@ -112,7 +113,7 @@ public class GarderobeHelper implements Response.Listener<JSONArray>, Response.E
         queue.add(deleteRequest);
     }
 
-    public void putItems(int id, final  String gebruikersnaam, final String categorie, final String merk, final String foto, final String locatie){
+    public void putItems(final int id, final  String gebruikersnaam, final String categorie, final String merk, final String foto, final String locatie){
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items/" + Integer.toString(id);
         StringRequest putRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
@@ -124,16 +125,17 @@ public class GarderobeHelper implements Response.Listener<JSONArray>, Response.E
             @Override
             public void onErrorResponse(VolleyError error) {
                 // error
+                if (error != null){
+                    Log.d("error", error.getMessage());
+                }
             }
         }
         ){  @Override
             public Map<String, String> getParams() {
                 Map<String, String> data = new HashMap<String, String>();
-                //data.put("gebruikersnaam", gebruikersnaam);
                 data.put("categorie", categorie);
                 data.put("merk", merk);
                 data.put("foto", foto);
-                //data.put("locatie", locatie);
 
                 return data;
             }

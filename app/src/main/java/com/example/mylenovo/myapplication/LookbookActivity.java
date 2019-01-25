@@ -16,12 +16,7 @@ public class LookbookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lookbook);
         GVLookbook = (GridView) findViewById(R.id.GVLookbook);
-        GVLookbook.setOnItemClickListener(new EntryClickListener());
-    }
-
-    public void ClickInstellingen(View v){
-        Intent intent = new Intent(this, InstellingenActivity.class);
-        startActivity(intent);
+        GVLookbook.setOnItemClickListener(new LookClickListener());
     }
 
     public void ClickPlus(View v){
@@ -39,12 +34,7 @@ public class LookbookActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void ClickVrienden(View v){
-        Intent intent = new Intent(this, vriendenActivity.class);
-        startActivity(intent);
-    }
-
-    private class EntryClickListener implements AdapterView.OnItemClickListener {
+    private class LookClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent(LookbookActivity.this, OutfitActivity.class);

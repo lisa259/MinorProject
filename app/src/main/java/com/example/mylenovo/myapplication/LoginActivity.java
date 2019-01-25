@@ -20,6 +20,8 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
     LoginHelper request;
     String gebruikersnaam;
     String wachtwoord;
+    boolean inloggen = false;
+    Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,9 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         setContentView(R.layout.activity_login);
 
         request = new LoginHelper(this);
+        db = Database.getInstance(getApplicationContext());
+        // request getitems
+        // request getlookbook, later pas
     }
 
     @Override
@@ -38,24 +43,26 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                 JSONObject item = logins.getJSONObject(i);
                 if ((gebruikersnaam.equals(item.getString("gebruikersnaam")) || gebruikersnaam.equals(item.getString("email"))) && wachtwoord.equals(item.getString("wachtwoord"))) {
 
-                    // OPSLAAN INGELOGDE GEBRUIKER!
+                    // Opslaan ingelogde gebruiker
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("gebruikersnaam", item.getString("gebruikersnaam"));
                     editor.commit();
 
-                    Log.d("zoeken", "login voor intent");
+                    inloggen = true;
+
+                    // get request, van server naar database
+
                     Intent intent = new Intent(this, GarderobeActivity.class);
-                    Log.d("zoeken", "login tussen intent");
                     startActivity(intent);
-                    Log.d("zoeken", "login na intent");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        // WORDT ALTIJD GETOAST.... OOKAL KLOPT HET WEL, NOG EVEN FIXEN!
-        Toast.makeText(this, "Inloggegevens kloppen niet", Toast.LENGTH_LONG).show();
+        if (!inloggen) {
+            Toast.makeText(this, "Inloggegevens kloppen niet", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

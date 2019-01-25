@@ -25,16 +25,6 @@
             android:textSize="28dp"
             android:textStyle="bold" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:clickable="true"
-            android:onClick="ClickInstellingen"
-            app:backgroundTint="?attr/colorBackgroundFloating"
-            app:srcCompat="@android:drawable/ic_menu_preferences" />
-
     </LinearLayout>
 
     <GridView
@@ -57,14 +47,6 @@
             android:layout_weight="1"
             android:onClick="ClickGarderobe"
             android:text="Garderobe" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="ClickVrienden"
-            android:text="Vrienden" />
 
         <Button
             android:id="@+id/button5"

@@ -22,7 +22,7 @@ public class NieuwItemActivity extends AppCompatActivity {
     ImageView IVItem;
     EditText ETMerk;
     EditText ETCategorie;
-    GarderobeHelper request;
+    ItemHelper request;
     private static final int PICK_IMAGE = 100;
     Uri imageUri = null;
     String gebruikersnaam;
@@ -43,7 +43,7 @@ public class NieuwItemActivity extends AppCompatActivity {
         ETMerk = (EditText) findViewById(R.id.ETMerk);
         ETCategorie = (EditText) findViewById(R.id.ETCategorie);
 
-        request = new GarderobeHelper(this);
+        request = new ItemHelper(this);
     }
 
     public void ClickUpload2(View v){

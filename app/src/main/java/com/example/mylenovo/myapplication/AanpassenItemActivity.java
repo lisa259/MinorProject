@@ -21,7 +21,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
     ImageView IVItem;
     EditText ETMerk;
     EditText ETCategorie;
-    GarderobeHelper request;
+    ItemHelper request;
     private static final int PICK_IMAGE = 100;
     Uri imageUri = null;
     String gebruikersnaam;
@@ -46,6 +46,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
         id = item.getId();
         gebruikersnaam = item.getGebruikersnaam();
         locatie = item.getLocatie();
+        fotoString = item.getFoto();
 
         // Foto van string naar bitmap
         byte[] b = Base64.decode(item.getFoto(), Base64.URL_SAFE);
@@ -56,7 +57,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
         ETMerk.setText(item.getMerk());
         ETCategorie.setText(item.getCategorie());
 
-        request = new GarderobeHelper(this);
+        request = new ItemHelper(this);
     }
 
     public void ClickUpload3(View v){
@@ -75,15 +76,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             IVItem.setImageURI(imageUri);
-        }
-    }
 
-    public void ClickAanpassenItem(View v){
-        categorie = ETCategorie.getText().toString();
-        merk = ETMerk.getText().toString();
-
-        // Checken of alles is ingevuld, foto niet checken, want die kan niet verwijderd worden.
-        if (!categorie.equals("") && !merk.equals("")) {
             // convert Uri to bitmap to string
             try {
                 Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
@@ -94,9 +87,18 @@ public class AanpassenItemActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
 
+    public void ClickAanpassenItem(View v){
+        categorie = ETCategorie.getText().toString();
+        merk = ETMerk.getText().toString();
+
+        // Checken of alles is ingevuld, foto niet checken, want die kan niet verwijderd worden.
+        if (!categorie.equals("") && !merk.equals("")) {
             // server updaten, put request
             request.putItems(id, gebruikersnaam, categorie, merk, fotoString, locatie);
+            onBackPressed();
         } else {
             Toast.makeText(this, "Vul alle velden in", Toast.LENGTH_LONG).show();
         }

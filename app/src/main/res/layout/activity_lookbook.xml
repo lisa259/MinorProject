@@ -36,16 +36,6 @@
             app:backgroundTint="?attr/colorBackgroundFloating"
             app:srcCompat="@android:drawable/ic_input_add" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:clickable="true"
-            android:onClick="ClickInstellingen"
-            app:backgroundTint="?attr/colorBackgroundFloating"
-            app:srcCompat="@android:drawable/ic_menu_preferences" />
-
     </LinearLayout>
 
     <GridView
@@ -77,13 +67,6 @@
             android:onClick="ClickWishlist"
             android:text="Wishlist" />
 
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="ClickVrienden"
-            android:text="Vrienden" />
     </LinearLayout>
 
 </LinearLayout>

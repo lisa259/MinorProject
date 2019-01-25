@@ -36,16 +36,6 @@
             app:backgroundTint="?attr/colorBackgroundFloating"
             app:srcCompat="@android:drawable/ic_input_add" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/FBInstellingen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:clickable="true"
-            android:onClick="ClickInstellingen"
-            app:backgroundTint="?attr/colorBackgroundFloating"
-            app:srcCompat="@android:drawable/ic_menu_preferences" />
-
     </LinearLayout>
 
     <Spinner
@@ -75,14 +65,6 @@
             android:layout_weight="1"
             android:onClick="ClickWishlist"
             android:text="Wishlist" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="ClickVrienden"
-            android:text="Vrienden" />
 
         <Button
             android:id="@+id/button5"
