@@ -4,11 +4,13 @@ package com.example.mylenovo.myapplication;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -43,6 +45,22 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items";
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
                 null, this, this);
+
+        jsonObjectRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+
         queue.add(jsonObjectRequest);
     }
 
@@ -56,35 +74,50 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         activity.gotItemsError(error.getMessage());
     }
 
+
     public void postItems(final String gebruikersnaam, final String categorie, final String foto, final String merk, final String locatie) {
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                // response
+                Toast.makeText(context, "Item toegevoegd", Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // error
+                Toast.makeText(context, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
             }
         }
         ){  @Override
         protected Map<String, String> getParams() {
             Map<String, String> data = new HashMap<>();
-
-            //data.put("itemID", itemID); KRIJGT VANZELF EEN ID TOEGEWEZEN
             data.put("gebruikersnaam", gebruikersnaam);
             data.put("categorie", categorie);
             data.put("foto", foto);
             data.put("merk", merk);
             data.put("locatie", locatie);
-
+            Log.d("zoeken", "post geput");
             return data;
         }
         };
+        postRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         queue.add(postRequest);
+        Log.d("zoeken", "post geadd");
     }
 
     public void deleteItems(int id){
@@ -93,12 +126,13 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                // response
+                Toast.makeText(context, "Item verwijderd", Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // error
+                Toast.makeText(context, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
             }
         }
         ){  @Override
@@ -110,6 +144,20 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
                 return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
             }
         };
+        deleteRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         queue.add(deleteRequest);
     }
 
@@ -120,14 +168,13 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             @Override
             public void onResponse(String response) {
                 // response
+                Toast.makeText(context, "Item aangepast", Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // error
-                if (error != null){
-                    Log.d("error", error.getMessage());
-                }
+                Toast.makeText(context, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
             }
         }
         ){  @Override
@@ -140,6 +187,20 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
                 return data;
             }
         };
+        putRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
         queue.add(putRequest);
     }
 }

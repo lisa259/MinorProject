@@ -2,6 +2,7 @@ package com.example.mylenovo.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,15 +21,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class GarderobeActivity extends AppCompatActivity implements ItemHelper.Callback  {
+import static com.example.mylenovo.myapplication.LoginActivity.db;
+
+public class GarderobeActivity extends AppCompatActivity {
 
     GridView GVGarderobe;
     ItemHelper request;
     String gebruikersnaam;
     Spinner SPCategorie;
     String selectCategorie;
-    ArrayList<String> categorieen;
-    Boolean first = true;
+    GridFotoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,62 +45,27 @@ public class GarderobeActivity extends AppCompatActivity implements ItemHelper.C
         SPCategorie.setOnItemSelectedListener(new SpinnerClickListener());
 
         request = new ItemHelper(this);
-        request.getItems(this);
-    }
 
-    @Override
-    public void gotItems(JSONArray items) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
+    }
 
-        // Alleen bij het opnieuw enteren van garderobe layout, spinner vullen
-        if (first) {
-            // Alle categorieen van gebruiker verzamelen
-            categorieen = new ArrayList<>();
-            for (int i = 0; i < items.length(); i++) {
-                try {
-                    JSONObject item = items.getJSONObject(i);
-                    // geen dubbele categorieen
-                    if (!categorieen.contains(item.getString("categorie")) && gebruikersnaam.equals(item.getString("gebruikersnaam")) && item.getString("locatie").equals("garderobe")) {
-                        categorieen.add(item.getString("categorie"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    public void onResume(){
+        super.onResume();
+        Cursor cursor = Database.selectCategorieen(db, gebruikersnaam, "garderobe");
+
+        ArrayList<String> categorieen = new ArrayList<String>();
+        try {
+            while (cursor.moveToNext()) {
+                categorieen.add(cursor.getString(cursor.getColumnIndex("categorie")));
             }
-
-            // spinner vullen
-            ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categorieen);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            SPCategorie.setAdapter(adapter);
-            first = false;
-
-        // Wanneer er een categorie geselecteerd is in de spinner
-        } else {
-            ArrayList<GridFotoItem> itemsList = new ArrayList<>();
-            for (int i = 0; i < items.length(); i++) {
-                try {
-                    JSONObject item = items.getJSONObject(i);
-                    // alle items uit geselecteerde categorie
-                    if (selectCategorie.equals(item.getString("categorie")) && gebruikersnaam.equals(item.getString("gebruikersnaam")) && item.getString("locatie").equals("garderobe")) {
-                        // object maken en toevoegen aan lijst
-                        itemsList.add(new GridFotoItem(item.getInt("id"), item.getString("gebruikersnaam"), item.getString("categorie"), item.getString("foto"), item.getString("merk"), item.getString("locatie")));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            // Lijst toekennen aan adapter
-            GridFotoAdapter adapter = new GridFotoAdapter(this, R.layout.grid_foto, itemsList);
-            GVGarderobe.setAdapter(adapter);
+        } finally {
+            cursor.close();
         }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categorieen);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SPCategorie.setAdapter(adapter);
     }
-
-    @Override
-    public void gotItemsError(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
 
     public void ClickNieuwItem(View v){
         Intent intent = new Intent(this, NieuwItemActivity.class);
@@ -121,22 +88,23 @@ public class GarderobeActivity extends AppCompatActivity implements ItemHelper.C
         public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
             // vul gridview met alle items in selecteerde categorie
             selectCategorie = SPCategorie.getSelectedItem().toString();
-            request.getItems(GarderobeActivity.this);
-
+            Cursor cursor = Database.selectItems(db, gebruikersnaam, selectCategorie, "garderobe");
+            adapter = new GridFotoAdapter(GarderobeActivity.this, cursor);
+            GVGarderobe.setAdapter(adapter);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parentView) {
-            // doe niets
+            // doe niets, methode moet wel bestaan, anders werkt onItemSelected niet..
         }
     }
 
     private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            GridFotoItem item = (GridFotoItem) adapterView.getItemAtPosition(i);
+            Cursor item = (Cursor) adapterView.getItemAtPosition(i);
 
             Intent intent = new Intent(GarderobeActivity.this, ItemActivity.class);
-            intent.putExtra("item", item);
+            intent.putExtra("id", item.getInt(item.getColumnIndex("_id")));
             startActivity(intent);
         }
     }
@@ -144,11 +112,17 @@ public class GarderobeActivity extends AppCompatActivity implements ItemHelper.C
     private class ItemLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-            GridFotoItem item = (GridFotoItem) adapterView.getItemAtPosition(i);
-            int id = item.getId();
-            // verwijder geselecteerde item
+            Cursor item = (Cursor) adapterView.getItemAtPosition(i);
+            int id = item.getInt(item.getColumnIndex("_id"));
+
+            // verwijder geselecteerde item van server
             request.deleteItems(id);
-            // update gridview en spinner?
+
+            // verwijder selecteerde item uit database
+            db.delete("items", id);
+
+            // update gridview en spinner
+            onResume();
             return true;
         }
     }

@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-
 public class Database extends SQLiteOpenHelper {
 
     private static Database instance;
@@ -19,69 +17,90 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String dbCreateItems = "CREATE TABLE items (id INTEGER PRIMARY KEY, " +
+        String dbCreateItems = "CREATE TABLE items (_id INTEGER PRIMARY KEY, " +
                 "gebruikersnaam text, categorie text, merk text, foto text, locatie text);";
-        String dbCreateLookbook = "CREATE TABLE lookbook (id INTEGER PRIMARY KEY, " +
+        String dbCreateLookbook = "CREATE TABLE lookbook (_id INTEGER PRIMARY KEY, " +
                 "items text, gebruikersnaam text);";
         db.execSQL(dbCreateItems);
         db.execSQL(dbCreateLookbook);
     }
 
     public static Database getInstance(Context context) {
-//        if (Database.instance != null) {
-//            return Database.instance;
-//        } else {
+        if (Database.instance == null) {
             Database.instance = new Database(context, "database", null, 1);
-            return Database.instance;
-//        }
+        }
+        SQLiteDatabase db = instance.getWritableDatabase();
+        db.delete("items", null, null);
+        db.delete("lookbook", null, null);
+        return Database.instance;
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        // Verwijder de data in de tabellen
-//        db.execSQL("DELETE FROM items;");
-//        db.execSQL("DELETE FROM lookbook;");
     }
 
-    public void insertItem(GridFotoItem item){
+    public void insertItem(int id, String gebruikersnaam, String categorie, String merk, String foto, String locatie){
         SQLiteDatabase db = instance.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("id", item.getId());
-        values.put("gebruikersnaam", item.getGebruikersnaam());
-        values.put("categorie", item.getCategorie());
-        values.put("merk", item.getMerk());
-        values.put("foto", item.getFoto());
-        values.put("locatie", item.getLocatie());
+        values.put("_id", id);
+        values.put("gebruikersnaam", gebruikersnaam);
+        values.put("categorie", categorie);
+        values.put("merk", merk);
+        values.put("foto", foto);
+        values.put("locatie", locatie);
         db.insert("items", null, values);
     }
 
     public void insertLookbook(int id, String gebruikersnaam, String items){
         SQLiteDatabase db = instance.getWritableDatabase();
         ContentValues values = new ContentValues();
-//        String listString = "";
-//        for (Integer i : list) {
-//            if (listString.equals("")) {
-//                listString += Integer.toString(i);
-//            } else {
-//                listString += ",";
-//                listString += Integer.toString(i);
-//            }
-//        }
-        values.put("id", id);
+        values.put("_id", id);
         values.put("gebruikersnaam", gebruikersnaam);
         values.put("items", items);
         db.insert("lookbook", null, values);
     }
 
-    public static Cursor selectitems(Database instance, String gebruikersnaam, String locatie) {
+    public static Cursor selectItems(Database instance, String gebruikersnaam, String categorie, String locatie) {
         SQLiteDatabase database = instance.getWritableDatabase();
-        String sqlString = "SELECT * FROM entries WHERE gebruikersnaam = " + gebruikersnaam +
-                " AND locatie = " + locatie;
-        return database.rawQuery(sqlString, null);
+        return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ? AND locatie = ?", new String[] {gebruikersnaam, categorie, locatie});
+    }
+
+    public static Cursor selectAllItems(Database instance, String gebruikersnaam, String categorie) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ?", new String[] {gebruikersnaam, categorie});
+    }
+
+    public static Cursor selectCategorieen(Database instance, String gebruikersnaam, String locatie) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT DISTINCT categorie FROM items WHERE gebruikersnaam = ? AND locatie = ?", new String[] {gebruikersnaam, locatie});
+    }
+
+    public static Cursor selectAllCategorieen(Database instance, String gebruikersnaam) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT DISTINCT categorie FROM items WHERE gebruikersnaam = ?", new String[] {gebruikersnaam});
+    }
+
+    public static Cursor selectMaxId(Database instance) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT MAX(_id) + 1 FROM items", null);
+    }
+
+    public static Cursor selectItemById(Database instance, int id) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT * FROM items WHERE _id = ?", new String[] {String.valueOf(id)});
+    }
+
+    public static void updateItems(int id, String categorie, String merk, String foto) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("categorie", categorie);
+        cv.put("merk", merk);
+        cv.put("foto", foto);
+        database.update("items", cv, "_id = ?", new String[] {String.valueOf(id)});
     }
 
     static void delete(String tabel, long id) {
         SQLiteDatabase db = instance.getWritableDatabase();
-        db.delete(tabel, "id = " + id, null);
+        db.delete(tabel, "_id = " + id, null);
     }
 }

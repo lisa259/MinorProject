@@ -1,6 +1,7 @@
 package com.example.mylenovo.myapplication;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,8 +20,16 @@ public class LookbookActivity extends AppCompatActivity {
         GVLookbook.setOnItemClickListener(new LookClickListener());
     }
 
+    public void onResume(){
+        super.onResume();
+        // Cursor select alle lookbooks uit database
+        // cursor toepassen op gv
+        // LookbookAdapter implementeren
+    }
+
     public void ClickPlus(View v){
         Intent intent = new Intent(this, OutfitActivity.class);
+        intent.putExtra("optie", "nieuw");
         startActivity(intent);
     }
 
@@ -37,7 +46,11 @@ public class LookbookActivity extends AppCompatActivity {
     private class LookClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Cursor item = (Cursor) adapterView.getItemAtPosition(i);
+
             Intent intent = new Intent(LookbookActivity.this, OutfitActivity.class);
+            intent.putExtra("optie", "bestaat");
+            intent.putExtra("id", item.getInt(item.getColumnIndex("_id")));
             startActivity(intent);
         }
     }

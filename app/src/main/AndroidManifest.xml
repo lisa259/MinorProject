@@ -25,7 +25,7 @@
         <activity android:name=".NieuwItemActivity" />
         <activity android:name=".OutfitActivity" />
         <activity android:name=".ItemActivity" />
-        <activity android:name=".OutfititemActivity" />
+        <activity android:name=".OutfitItemActivity" />
         <activity android:name=".AanpassenItemActivity"></activity>
     </application>
 

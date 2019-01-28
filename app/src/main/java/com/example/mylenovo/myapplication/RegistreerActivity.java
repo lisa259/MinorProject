@@ -1,6 +1,8 @@
 package com.example.mylenovo.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -73,6 +75,11 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
         }
         if (bruikbaar) {
             // toevoegen aan server mbv post request
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("gebruikersnaam", gebruikersnaam);
+            editor.commit();
+
             request.postLogins(gebruikersnaam, email, wachtwoord1);
             Intent intent = new Intent(this, GarderobeActivity.class);
             startActivity(intent);
@@ -81,6 +88,6 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
 
     @Override
     public void gotLoginsError(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
     }
 }

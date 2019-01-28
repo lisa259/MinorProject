@@ -2,6 +2,7 @@ package com.example.mylenovo.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -9,12 +10,15 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+
+import static com.example.mylenovo.myapplication.LoginActivity.db;
 
 
 public class NieuwItemActivity extends AppCompatActivity {
@@ -66,39 +70,50 @@ public class NieuwItemActivity extends AppCompatActivity {
     }
 
     public void ClickToevoegen2(View v){
-        // Opslaan in database
-        // checken of alles is ingevuld
         categorie = ETCategorie.getText().toString();
         merk = ETMerk.getText().toString();
-        if (categorie.equals("")) {
-            Toast.makeText(this, "Voer categorie in", Toast.LENGTH_LONG).show();
+
+        // is alles ingevuld?
+        if (!categorie.equals("") && !merk.equals("") && imageUri != null) {
+            // convert Uri to bitmap to string
+            try {
+                Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] b = baos.toByteArray();
+                fotoString = Base64.encodeToString(b, Base64.URL_SAFE | Base64.NO_WRAP);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
+
+            // Post item op
+            request.postItems(gebruikersnaam, categorie, fotoString, merk, locatie);
+
+            // Als server leeg is, wordt het id 1, want 1e item
+            int id = 1;
+
+            // Als server niet leeg is, vind eerste ongebruike id
+            Cursor cursor = Database.selectMaxId(db);
+            cursor.moveToFirst();
+            if (cursor != null) {
+                try {
+                    while (cursor.moveToNext()) {
+                        id = cursor.getInt(0);
+                    }
+                } finally {
+                    cursor.close();
+                }
+            }
+            // Toevoegen aan database
+            db.insertItem(id, gebruikersnaam, categorie, merk, fotoString, locatie);
+
+            onBackPressed();
+
+        } else {
+            Toast.makeText(this, "Vul alle velden in", Toast.LENGTH_LONG).show();
         }
-        if (merk.equals("")) {
-            Toast.makeText(this, "Voer merk in", Toast.LENGTH_LONG).show();
-        }
-
-        // NOG CHECKEN OF URI NIET LEEG IS
-        if (imageUri == null) {
-            Toast.makeText(this, "Voeg foto toe", Toast.LENGTH_LONG).show();
-        }
-
-        // convert Uri to bitmap to string
-        try {
-            Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] b = baos.toByteArray();
-            fotoString = Base64.encodeToString(b, Base64.URL_SAFE | Base64.NO_WRAP);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
-
-        // ALLEEN POSTEN ALS NIKS LEEG IS
-
-        request.postItems(gebruikersnaam, categorie, fotoString, merk, locatie);
-        onBackPressed();
     }
 }

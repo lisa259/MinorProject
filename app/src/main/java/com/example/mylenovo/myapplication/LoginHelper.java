@@ -1,10 +1,12 @@
 package com.example.mylenovo.myapplication;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -38,6 +40,22 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
                 null, this, this);
+
+        jsonObjectRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+
         queue.add(jsonObjectRequest);
     }
 
@@ -65,6 +83,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
             @Override
             public void onErrorResponse(VolleyError error) {
                 // error
+                Toast.makeText(context, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
             }
         }
         ){  @Override
@@ -78,7 +97,21 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
                 return data;
             }
         };
+        postRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+
         queue.add(postRequest);
     }
-
 }

@@ -1,12 +1,10 @@
 package com.example.mylenovo.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,13 +13,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback {
+public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback, ItemHelper.Callback  {
 
     LoginHelper request;
+    ItemHelper requestItem;
     String gebruikersnaam;
     String wachtwoord;
     boolean inloggen = false;
-    Database db;
+    static Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +28,17 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         setContentView(R.layout.activity_login);
 
         request = new LoginHelper(this);
-        db = Database.getInstance(getApplicationContext());
-        // request getitems
+
+        requestItem = new ItemHelper(this);
+
         // request getlookbook, later pas
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        db = Database.getInstance(getApplicationContext());
+        requestItem.getItems(this);
     }
 
     @Override
@@ -51,8 +58,6 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
 
                     inloggen = true;
 
-                    // get request, van server naar database
-
                     Intent intent = new Intent(this, GarderobeActivity.class);
                     startActivity(intent);
                 }
@@ -67,10 +72,8 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
 
     @Override
     public void gotLoginsError(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
     }
-
-
 
     public void ClickLogin(View v){
         // Is er iets ingevuld?
@@ -84,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         } else {
             Toast.makeText(this, "Voer eerst alle gegevens in", Toast.LENGTH_LONG).show();
         }
-
     }
 
     public void ClickAanmelden1(View v){
@@ -92,5 +94,21 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         startActivity(intent);
     }
 
+    @Override
+    public void gotItems(JSONArray items) {
+        for (int i = 0; i < items.length(); i++) {
+            try {
+                JSONObject item = items.getJSONObject(i);
+                // items opslaan in database
+                db.insertItem(item.getInt("id"), item.getString("gebruikersnaam"), item.getString("categorie"), item.getString("merk"), item.getString("foto"), item.getString("locatie"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    @Override
+    public void gotItemsError(String message) {
+        Toast.makeText(this, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
+    }
 }
