@@ -35,11 +35,21 @@ Bij decoden van de Base64-string. gebruikmaken van byte[] decoded = Base64.decod
 https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview  
   
 # dag 10 (dinsdag)  
-Verwijderen van een kledingitem door deze lang aan te klikken in de garderobe ipv door een verwijder-knop in activity_item.xml.  
+Verwijderen van een kledingitem door deze lang aan te klikken in de garderobe ipv door een verwijder-knop in activity_item.xml. Delete item request geimplementeerd.  
   
 # dag 11 (woensdag)  
-De knop in activiry_item_xml veranderen van verwijderen naar aanpassen.  
-
-Besloten om de vrienden functie weg te laten, dit zal teveel werk worden. Hierdoor vervallen verschillende extra functies.
+De knop in activiry_item_xml veranderen van verwijderen naar aanpassen. Put request geimplementeerd.  
+Besloten om de vrienden functie weg te laten, dit zal teveel werk worden. Hierdoor vervallen extra functies als profielfoto (heeft niet veel zin zonder vrienden die het kunnen zien) en alle activities voor vrienden.   
+  
+# dag 12 (donderdag)  
+Besloten om een database binnen de app te implementeren, deze bij het opstarten van de app te vullen met alle items/lookbooks. Dit zodat er maar 1 keer de get request hoeft te worden gedaan (inlogrequest wordt wel apart gedaan). Omdat er geen vrienden-optie meer bijkomt is dit prima mogelijk, want hetgeen dat andere posten/pullen/deleten heeft geen impact op jouw items etc.  
+  
+# dag 13 (vrijdag) 
+Database legen bij het openen van het inlogscherm. Zodat wanneer er van gebruiker gewisseld wordt, de data van deze nieuwe inlogger up to date is. Garderobe optie werkt nu helemaal. GarderobeActivity kopieëren in WishlistActivity en wat kleine aanpassingen gedaan. Wishlist is nu ook klaar.  
+  
+# dag 14 (maandag)  
+Implementatie lookbook. Besloten om van alle items van één look het id op te slaan in een string, dit met spaties ertussen. Dit gedaan zodat het op te slaan is op de server. In de app wordt dit omgezet naar een String[], zodat het gebruikt kant worden in de sql queries.     
+# dag 15 (dinsdag)  
+# dag 16 (woensdag)  
 
 
