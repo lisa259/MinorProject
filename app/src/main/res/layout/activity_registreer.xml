@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".RegistreerActivity">
+    tools:context=".Activities.LookbookActivity$RegistreerActivity">
 
     <TextView
         android:id="@+id/textView"

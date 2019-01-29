@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,8 @@ public class OutfitItemActivity extends AppCompatActivity {
     String gebruikersnaam;
     String selectCategorie;
     GridFotoAdapter adapter;
+    LookbookHelper request;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +33,18 @@ public class OutfitItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_outfititem);
         SPItems = (Spinner) findViewById(R.id.SPItems);
         SPItems.setOnItemSelectedListener(new SpinnerClickListener());
+
         GVItems = (GridView) findViewById((R.id.GVItems));
         GVItems.setOnItemClickListener(new GVListener());
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
+        request = new LookbookHelper(this);
     }
 
     public void onResume(){
         super.onResume();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
+
         // spinner vullen met categorieen van beide locaties
         Cursor cursor = Database.selectAllCategorieen(db, gebruikersnaam);
         ArrayList<String> categorieen = new ArrayList<String>();
@@ -60,6 +66,7 @@ public class OutfitItemActivity extends AppCompatActivity {
             // vul gridview met alle items in selecteerde categorie, uit zowel garderobe als wishlist
             selectCategorie = SPItems.getSelectedItem().toString();
             Cursor cursor = Database.selectAllItems(db, gebruikersnaam, selectCategorie);
+            cursor.moveToFirst();
             adapter = new GridFotoAdapter(OutfitItemActivity.this, cursor);
             GVItems.setAdapter(adapter);
         }
@@ -73,23 +80,56 @@ public class OutfitItemActivity extends AppCompatActivity {
     private class GVListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            // Item toevoegen aan look
+            // Item toevoegen aan look, id van item
+            Cursor item = (Cursor) adapterView.getItemAtPosition(i);
+            int idItem = item.getInt(item.getColumnIndex("_id"));
+
             // bestaat de look al? of is dit het 1e item in de look
             Intent intentGet = getIntent();
             String optie = intentGet.getStringExtra("optie");
 
             if (optie.equals("nieuw")) {
                 // post request voor nieuwe look
+                request.postLookbook(gebruikersnaam, Integer.toString(idItem));
+
+                // Als server niet leeg is, vind eerste ongebruike id
+                Cursor cursor = Database.selectMaxIdLookbook(db);
+                if (cursor != null) {
+                    try {
+                        while (cursor.moveToNext()) {
+                            id = cursor.getInt(0);
+                        }
+                    } finally {
+                        cursor.close();
+                    }
+                } else {
+                    // Als server leeg is, wordt het id 1, want 1e item
+                    id = 1;
+                }
+
                 // toevoegen aan database
+                db.insertLookbook(id, gebruikersnaam, Integer.toString(idItem));
+
             } else {
-                int id = intentGet.getIntExtra("id", 0);
+                // Item toevoegen aan bestaande look
+                id = intentGet.getIntExtra("idLookbook", 0); // geeft 0??
+
+                Cursor cursor = db.selectLookbookById(db, id);
+                cursor.moveToFirst();
+
+                String items = cursor.getString(cursor.getColumnIndex("items"));
+                String itemsnieuw = items + "," + Integer.toString(idItem);
+
                 // update server
+                request.putLookbook(id, itemsnieuw);
+
                 // update database
+                db.updateLookbook(id, itemsnieuw);
             }
 
             Intent intent = new Intent(OutfitItemActivity.this, OutfitActivity.class);
-            intent.putExtra("optie", optie);
-            //intent.putExtra("id", id);
+            intent.putExtra("optie", "bestaat");
+            intent.putExtra("idLookbook", id);
             startActivity(intent);
         }
     }

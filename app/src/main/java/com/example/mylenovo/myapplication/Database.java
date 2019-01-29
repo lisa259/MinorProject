@@ -65,6 +65,11 @@ public class Database extends SQLiteOpenHelper {
         return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ? AND locatie = ?", new String[] {gebruikersnaam, categorie, locatie});
     }
 
+    public static Cursor selectLookbook(Database instance, String gebruikersnaam) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT * FROM lookbook WHERE gebruikersnaam = ?", new String[] {gebruikersnaam});
+    }
+
     public static Cursor selectAllItems(Database instance, String gebruikersnaam, String categorie) {
         SQLiteDatabase database = instance.getWritableDatabase();
         return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ?", new String[] {gebruikersnaam, categorie});
@@ -80,14 +85,34 @@ public class Database extends SQLiteOpenHelper {
         return database.rawQuery("SELECT DISTINCT categorie FROM items WHERE gebruikersnaam = ?", new String[] {gebruikersnaam});
     }
 
-    public static Cursor selectMaxId(Database instance) {
+    public static Cursor selectMaxIdItems(Database instance) {
         SQLiteDatabase database = instance.getWritableDatabase();
         return database.rawQuery("SELECT MAX(_id) + 1 FROM items", null);
+    }
+
+    public static Cursor selectMaxIdLookbook(Database instance) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT MAX(_id) + 1 FROM lookbook", null);
     }
 
     public static Cursor selectItemById(Database instance, int id) {
         SQLiteDatabase database = instance.getWritableDatabase();
         return database.rawQuery("SELECT * FROM items WHERE _id = ?", new String[] {String.valueOf(id)});
+    }
+
+    public static Cursor selectLookbookById(Database instance, int id) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        return database.rawQuery("SELECT * FROM lookbook WHERE _id = ?", new String[] {String.valueOf(id)});
+    }
+
+    public static Cursor selectMultipleItemsById(Database instance, int aantal, String[] list) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        String sql = "SELECT * FROM items WHERE _id IN (?";
+        for (int i = 1; i < aantal; i++) {
+            sql += ",?";
+        }
+        sql += ")";
+        return database.rawQuery(sql, list);
     }
 
     public static void updateItems(int id, String categorie, String merk, String foto) {
@@ -97,6 +122,13 @@ public class Database extends SQLiteOpenHelper {
         cv.put("merk", merk);
         cv.put("foto", foto);
         database.update("items", cv, "_id = ?", new String[] {String.valueOf(id)});
+    }
+
+    public static void updateLookbook(int id, String items) {
+        SQLiteDatabase database = instance.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("items", items);
+        database.update("lookbook", cv, "_id = ?", new String[] {String.valueOf(id)});
     }
 
     static void delete(String tabel, long id) {

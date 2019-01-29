@@ -40,14 +40,17 @@ public class NieuwItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nieuw_item);
 
-        Intent intent = getIntent();
-        locatie = intent.getStringExtra("locatie");
-
         IVItem = (ImageView) findViewById(R.id.IVitem);
         ETMerk = (EditText) findViewById(R.id.ETMerk);
         ETCategorie = (EditText) findViewById(R.id.ETCategorie);
 
         request = new ItemHelper(this);
+    }
+
+    public void onResume(){
+        super.onResume();
+        Intent intent = getIntent();
+        locatie = intent.getStringExtra("locatie");
     }
 
     public void ClickUpload2(View v){
@@ -83,7 +86,7 @@ public class NieuwItemActivity extends AppCompatActivity {
                 byte[] b = baos.toByteArray();
                 fotoString = Base64.encodeToString(b, Base64.URL_SAFE | Base64.NO_WRAP);
             } catch (Exception e) {
-                e.printStackTrace();
+                Toast.makeText(this, "foto opslaan mislukt", Toast.LENGTH_LONG).show();
             }
 
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -96,8 +99,7 @@ public class NieuwItemActivity extends AppCompatActivity {
             int id = 1;
 
             // Als server niet leeg is, vind eerste ongebruike id
-            Cursor cursor = Database.selectMaxId(db);
-            cursor.moveToFirst();
+            Cursor cursor = Database.selectMaxIdItems(db);
             if (cursor != null) {
                 try {
                     while (cursor.moveToNext()) {

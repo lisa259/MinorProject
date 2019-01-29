@@ -81,7 +81,6 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Item toegevoegd", Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -98,7 +97,6 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             data.put("foto", foto);
             data.put("merk", merk);
             data.put("locatie", locatie);
-            Log.d("zoeken", "post geput");
             return data;
         }
         };
@@ -117,7 +115,6 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             }
         });
         queue.add(postRequest);
-        Log.d("zoeken", "post geadd");
     }
 
     public void deleteItems(int id){
@@ -126,7 +123,6 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, "Item verwijderd", Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -168,7 +164,6 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             @Override
             public void onResponse(String response) {
                 // response
-                Toast.makeText(context, "Item aangepast", Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override

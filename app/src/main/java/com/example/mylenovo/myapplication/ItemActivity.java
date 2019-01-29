@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,14 +24,13 @@ public class ItemActivity extends AppCompatActivity {
     Cursor cursor;
     ImageView IVfoto;
     TextView TVmerk;
+    String optie;
+    int idLook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
-
-        Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
 
         IVfoto = (ImageView) findViewById(R.id.IVitemfoto);
         TVmerk = (TextView) findViewById(R.id.TVmerk);
@@ -38,6 +38,18 @@ public class ItemActivity extends AppCompatActivity {
 
     public void onResume(){
         super.onResume();
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+
+        Button aanpassen = (Button) findViewById(R.id.BTNaanpassen);
+        aanpassen.setVisibility(View.VISIBLE);
+        if(intent.hasExtra("optie")) {
+            optie = intent.getStringExtra("optie");
+            idLook = intent.getIntExtra("idLook", 0);
+            // Aanpasknop op invisible
+            aanpassen.setVisibility(View.INVISIBLE);
+        }
+
         cursor = Database.selectItemById(db, id);
         cursor.moveToFirst();
 
@@ -53,8 +65,15 @@ public class ItemActivity extends AppCompatActivity {
 
     public void ClickAanpassen(View v){
         // open aanpasscherm, vul items in
-        Intent intent = new Intent(this, AanpassenItemActivity.class);
-        intent.putExtra("id", id);
+        Intent intent;
+        if (optie != null) {
+            intent = new Intent(this, OutfitActivity.class);
+            intent.putExtra("optie", optie);
+            intent.putExtra("id", idLook);
+        } else {
+            intent = new Intent(this, AanpassenItemActivity.class);
+            intent.putExtra("id", id);
+        }
         startActivity(intent);
     }
 }

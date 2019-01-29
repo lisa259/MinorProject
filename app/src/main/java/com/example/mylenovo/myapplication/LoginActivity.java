@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,10 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback, ItemHelper.Callback  {
+public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback, ItemHelper.Callback, LookbookHelper.Callback  {
 
     LoginHelper request;
     ItemHelper requestItem;
+    LookbookHelper requestLookbook;
     String gebruikersnaam;
     String wachtwoord;
     boolean inloggen = false;
@@ -28,10 +30,8 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         setContentView(R.layout.activity_login);
 
         request = new LoginHelper(this);
-
         requestItem = new ItemHelper(this);
-
-        // request getlookbook, later pas
+        requestLookbook = new LookbookHelper(this);
     }
 
     @Override
@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         super.onResume();
         db = Database.getInstance(getApplicationContext());
         requestItem.getItems(this);
+        requestLookbook.getLookbook(this);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                     startActivity(intent);
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                Toast.makeText(this, "Inloggen is op het moment niet mogelijk", Toast.LENGTH_LONG).show();
             }
         }
         if (!inloggen) {
@@ -102,13 +103,33 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                 // items opslaan in database
                 db.insertItem(item.getInt("id"), item.getString("gebruikersnaam"), item.getString("categorie"), item.getString("merk"), item.getString("foto"), item.getString("locatie"));
             } catch (JSONException e) {
-                e.printStackTrace();
+                Toast.makeText(this, "Kan items niet ontvangen van server", Toast.LENGTH_LONG).show();
             }
         }
+        Log.d("zoeken", "items klaar");
     }
 
     @Override
     public void gotItemsError(String message) {
+        Toast.makeText(this, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void gotLookbook(JSONArray looks) {
+        for (int i = 0; i < looks.length(); i++) {
+            try {
+                JSONObject look = looks.getJSONObject(i);
+                // look opslaan in database
+                db.insertLookbook(look.getInt("id"), look.getString("gebruikersnaam"), look.getString("items"));
+            } catch (JSONException e) {
+                Toast.makeText(this, "Kan lookbook niet ontvangen van server", Toast.LENGTH_LONG).show();
+            }
+        }
+        Log.d("zoeken", "lookbook klaar");
+    }
+
+    @Override
+    public void gotLookbookError(String message) {
         Toast.makeText(this, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
     }
 }

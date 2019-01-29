@@ -39,12 +39,17 @@ public class AanpassenItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aanpassen_item);
 
-        Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
-
         IVItem = (ImageView) findViewById(R.id.IVitem2);
         ETMerk = (EditText) findViewById(R.id.ETMerk2);
         ETCategorie = (EditText) findViewById(R.id.ETCategorie2);
+
+        request = new ItemHelper(this);
+    }
+
+    public void onResume(){
+        super.onResume();
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
 
         Cursor cursor = Database.selectItemById(db, id);
         cursor.moveToFirst();
@@ -60,8 +65,6 @@ public class AanpassenItemActivity extends AppCompatActivity {
         IVItem.setImageBitmap(fotoBitmap);
         ETMerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
         ETCategorie.setText(cursor.getString(cursor.getColumnIndex("categorie")));
-
-        request = new ItemHelper(this);
     }
 
     public void ClickUpload3(View v){
@@ -89,7 +92,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
                 byte[] b = baos.toByteArray();
                 fotoString = Base64.encodeToString(b, Base64.URL_SAFE | Base64.NO_WRAP);
             } catch (Exception e) {
-                e.printStackTrace();
+                Toast.makeText(this, "foto opslaan mislukt", Toast.LENGTH_LONG).show();
             }
         }
     }

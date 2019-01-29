@@ -70,7 +70,7 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
                     bruikbaar = false;
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                Toast.makeText(this, "Inloggen is op het moment niet mogelijk", Toast.LENGTH_LONG).show();
             }
         }
         if (bruikbaar) {

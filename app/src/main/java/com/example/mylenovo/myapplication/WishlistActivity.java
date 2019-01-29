@@ -45,13 +45,13 @@ public class WishlistActivity extends AppCompatActivity {
         SPCategorie.setOnItemSelectedListener(new SpinnerClickListener());
 
         request = new ItemHelper(this);
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
     }
 
     public void onResume(){
         super.onResume();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
+
         Cursor cursor = Database.selectCategorieen(db, gebruikersnaam, "wishlist");
 
         ArrayList<String> categorieen = new ArrayList<String>();
@@ -89,6 +89,8 @@ public class WishlistActivity extends AppCompatActivity {
             // vul gridview met alle items in selecteerde categorie
             selectCategorie = SPCategorie.getSelectedItem().toString();
             Cursor cursor = Database.selectItems(db, gebruikersnaam, selectCategorie, "wishlist");
+            cursor.moveToFirst();
+
             adapter = new GridFotoAdapter(WishlistActivity.this, cursor);
             GVWishlist.setAdapter(adapter);
         }
@@ -126,5 +128,10 @@ public class WishlistActivity extends AppCompatActivity {
             onResume();
             return true;
         }
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

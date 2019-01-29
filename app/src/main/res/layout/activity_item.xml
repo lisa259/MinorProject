@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="15dp"
     android:orientation="vertical"
-    tools:context=".ItemActivity">
+    tools:context=".Activities.ItemActivity">
 
     <TextView
         android:id="@+id/textView5"
@@ -35,7 +35,7 @@
         android:textSize="18dp" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/BTNaanpassen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
