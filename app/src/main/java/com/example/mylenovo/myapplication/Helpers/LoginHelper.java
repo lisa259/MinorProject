@@ -1,4 +1,4 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Helpers;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -9,7 +9,6 @@ import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
@@ -34,7 +33,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
     }
 
     // Get Logins from url. Using interface Callback
-    void getLogins(LoginHelper.Callback inputActivity) {
+    public void getLogins(LoginHelper.Callback inputActivity) {
         this.activity = inputActivity;
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";

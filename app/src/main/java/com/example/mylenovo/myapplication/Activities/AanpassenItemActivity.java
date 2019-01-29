@@ -1,27 +1,28 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.mylenovo.myapplication.Databases.Database;
+import com.example.mylenovo.myapplication.Helpers.ItemHelper;
+import com.example.mylenovo.myapplication.R;
+
 import java.io.ByteArrayOutputStream;
 
-import static com.example.mylenovo.myapplication.LoginActivity.db;
+import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
-
-public class NieuwItemActivity extends AppCompatActivity {
+public class AanpassenItemActivity extends AppCompatActivity {
 
     ImageView IVItem;
     EditText ETMerk;
@@ -34,15 +35,16 @@ public class NieuwItemActivity extends AppCompatActivity {
     String categorie;
     String fotoString;
     String locatie;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nieuw_item);
+        setContentView(R.layout.activity_aanpassen_item);
 
-        IVItem = (ImageView) findViewById(R.id.IVitem);
-        ETMerk = (EditText) findViewById(R.id.ETMerk);
-        ETCategorie = (EditText) findViewById(R.id.ETCategorie);
+        IVItem = (ImageView) findViewById(R.id.IVitem2);
+        ETMerk = (EditText) findViewById(R.id.ETMerk2);
+        ETCategorie = (EditText) findViewById(R.id.ETCategorie2);
 
         request = new ItemHelper(this);
     }
@@ -50,10 +52,25 @@ public class NieuwItemActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         Intent intent = getIntent();
-        locatie = intent.getStringExtra("locatie");
+        id = intent.getIntExtra("id", 0);
+
+        Cursor cursor = Database.selectItemById(db, id);
+        cursor.moveToFirst();
+
+        gebruikersnaam = cursor.getString(cursor.getColumnIndex("gebruikersnaam"));
+        locatie = cursor.getString(cursor.getColumnIndex("locatie"));
+        fotoString = cursor.getString(cursor.getColumnIndex("foto"));
+
+        // Foto van string naar bitmap
+        byte[] b = Base64.decode(fotoString, Base64.URL_SAFE);
+        Bitmap fotoBitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+
+        IVItem.setImageBitmap(fotoBitmap);
+        ETMerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
+        ETCategorie.setText(cursor.getString(cursor.getColumnIndex("categorie")));
     }
 
-    public void ClickUpload2(View v){
+    public void ClickUpload3(View v){
         // Open gallerij
         openGallery();
     }
@@ -69,15 +86,7 @@ public class NieuwItemActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
             IVItem.setImageURI(imageUri);
-        }
-    }
 
-    public void ClickToevoegen2(View v){
-        categorie = ETCategorie.getText().toString();
-        merk = ETMerk.getText().toString();
-
-        // is alles ingevuld?
-        if (!categorie.equals("") && !merk.equals("") && imageUri != null) {
             // convert Uri to bitmap to string
             try {
                 Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
@@ -88,32 +97,22 @@ public class NieuwItemActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(this, "foto opslaan mislukt", Toast.LENGTH_LONG).show();
             }
+        }
+    }
 
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
+    public void ClickAanpassenItem(View v){
+        categorie = ETCategorie.getText().toString();
+        merk = ETMerk.getText().toString();
 
-            // Post item op
-            request.postItems(gebruikersnaam, categorie, fotoString, merk, locatie);
+        // Checken of alles is ingevuld, foto niet checken, want die kan niet verwijderd worden.
+        if (!categorie.equals("") && !merk.equals("")) {
+            // server updaten, put request
+            request.putItems(id, gebruikersnaam, categorie, merk, fotoString, locatie);
 
-            // Als server leeg is, wordt het id 1, want 1e item
-            int id = 1;
-
-            // Als server niet leeg is, vind eerste ongebruike id
-            Cursor cursor = Database.selectMaxIdItems(db);
-            if (cursor != null) {
-                try {
-                    while (cursor.moveToNext()) {
-                        id = cursor.getInt(0);
-                    }
-                } finally {
-                    cursor.close();
-                }
-            }
-            // Toevoegen aan database
-            db.insertItem(id, gebruikersnaam, categorie, merk, fotoString, locatie);
+            // aanpassen database
+            Database.updateItems(id, categorie, merk, fotoString);
 
             onBackPressed();
-
         } else {
             Toast.makeText(this, "Vul alle velden in", Toast.LENGTH_LONG).show();
         }

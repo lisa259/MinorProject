@@ -1,9 +1,8 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Helpers;
 
 // HEADERS MET COMMENTS!
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -39,7 +38,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
     }
 
     // Get Items from url. Using interface Callback
-    void getItems(ItemHelper.Callback inputActivity) {
+    public void getItems(ItemHelper.Callback inputActivity) {
         this.activity = inputActivity;
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items";

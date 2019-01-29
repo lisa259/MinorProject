@@ -1,4 +1,4 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +8,8 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ResourceCursorAdapter;
+
+import com.example.mylenovo.myapplication.R;
 
 public class GridFotoAdapter extends ResourceCursorAdapter {
 

@@ -1,4 +1,4 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Databases;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -131,7 +131,7 @@ public class Database extends SQLiteOpenHelper {
         database.update("lookbook", cv, "_id = ?", new String[] {String.valueOf(id)});
     }
 
-    static void delete(String tabel, long id) {
+    public static void delete(String tabel, long id) {
         SQLiteDatabase db = instance.getWritableDatabase();
         db.delete(tabel, "_id = " + id, null);
     }

@@ -11,22 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="LoginActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegistreerActivity" />
-        <activity android:name=".GarderobeActivity" />
-        <activity android:name=".WishlistActivity" />
-        <activity android:name=".LookbookActivity" />
-        <activity android:name=".NieuwItemActivity" />
-        <activity android:name=".OutfitActivity" />
-        <activity android:name=".ItemActivity" />
-        <activity android:name=".OutfitItemActivity" />
-        <activity android:name=".AanpassenItemActivity"></activity>
+        <activity android:name=".Activities.RegistreerActivity" />
+        <activity android:name=".Activities.GarderobeActivity" />
+        <activity android:name=".Activities.WishlistActivity" />
+        <activity android:name=".Activities.LookbookActivity" />
+        <activity android:name=".Activities.NieuwItemActivity" />
+        <activity android:name=".Activities.OutfitActivity" />
+        <activity android:name=".Activities.ItemActivity" />
+        <activity android:name=".Activities.OutfitItemActivity" />
+        <activity android:name=".Activities.AanpassenItemActivity"></activity>
     </application>
 
 </manifest>

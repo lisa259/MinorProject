@@ -1,4 +1,4 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,16 +6,20 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.Spinner;
 
+import com.example.mylenovo.myapplication.Adapters.GridFotoAdapter;
+import com.example.mylenovo.myapplication.Databases.Database;
+import com.example.mylenovo.myapplication.Helpers.LookbookHelper;
+import com.example.mylenovo.myapplication.R;
+
 import java.util.ArrayList;
 
-import static com.example.mylenovo.myapplication.LoginActivity.db;
+import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class OutfitItemActivity extends AppCompatActivity {
 

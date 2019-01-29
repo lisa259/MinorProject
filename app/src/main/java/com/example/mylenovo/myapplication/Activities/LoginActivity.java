@@ -1,4 +1,4 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,11 +10,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mylenovo.myapplication.Databases.Database;
+import com.example.mylenovo.myapplication.Helpers.ItemHelper;
+import com.example.mylenovo.myapplication.Helpers.LoginHelper;
+import com.example.mylenovo.myapplication.Helpers.LookbookHelper;
+import com.example.mylenovo.myapplication.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback, ItemHelper.Callback, LookbookHelper.Callback  {
+public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback, ItemHelper.Callback, LookbookHelper.Callback {
 
     LoginHelper request;
     ItemHelper requestItem;
@@ -22,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
     String gebruikersnaam;
     String wachtwoord;
     boolean inloggen = false;
-    static Database db;
+    public static Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import static com.example.mylenovo.myapplication.LoginActivity.db;
+import com.example.mylenovo.myapplication.Adapters.LookbookAdapter;
+import com.example.mylenovo.myapplication.Helpers.LookbookHelper;
+import com.example.mylenovo.myapplication.R;
+
+import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class LookbookActivity extends AppCompatActivity {
 

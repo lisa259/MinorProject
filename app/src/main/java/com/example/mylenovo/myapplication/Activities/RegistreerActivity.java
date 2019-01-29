@@ -1,4 +1,4 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.mylenovo.myapplication.Activities.GarderobeActivity;
+import com.example.mylenovo.myapplication.Helpers.LoginHelper;
+import com.example.mylenovo.myapplication.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

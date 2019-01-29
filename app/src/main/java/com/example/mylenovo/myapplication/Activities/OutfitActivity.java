@@ -1,19 +1,17 @@
-package com.example.mylenovo.myapplication;
+package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.example.mylenovo.myapplication.Adapters.GridFotoAdapter;
+import com.example.mylenovo.myapplication.R;
 
-import static com.example.mylenovo.myapplication.LoginActivity.db;
+import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class OutfitActivity extends AppCompatActivity {
 
