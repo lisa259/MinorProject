@@ -1,3 +1,8 @@
+/*
+  Deze activity geeft alle items uit een eerder geselecteerde lookbook weer.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -31,6 +36,7 @@ public class OutfitActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         Intent intent = getIntent();
+        // Optie geeft aan of een lookbook al bestaat, of het een nieuw lookbook wordt
         optie = intent.getStringExtra("optie");
 
         if (optie.equals("bestaat")) {
@@ -46,18 +52,18 @@ public class OutfitActivity extends AppCompatActivity {
             int aantalItems = items.split(",").length;
             String[] itemIds = new String[aantalItems];
 
-            // Van string naar String[]
+            // Items van string naar String[], zodat het ingevuld kan worden in select in database
             int index = 0;
             for (String field : items.split(",")) {
                 itemIds[index] = String.valueOf(field);
                 index++;
             }
 
-            // select alle items waarvan het id in itemsIds zit
+            // select alle items waarvan het id in itemsIds zit (dubbele items worden 1x opgehaald)
             Cursor cursor2 = db.selectMultipleItemsById(db, aantalItems, itemIds);
             cursor2.moveToFirst();
 
-            // set cursor met adapter to grid
+            // set cursor met adapter op grid
             adapter = new GridFotoAdapter(this, cursor2);
             gvOutfit.setAdapter(adapter);
         }
@@ -75,6 +81,7 @@ public class OutfitActivity extends AppCompatActivity {
     private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            // Geselecteerde item achterhalen
             Cursor item = (Cursor) adapterView.getItemAtPosition(i);
 
             Intent intent = new Intent(OutfitActivity.this, ItemActivity.class);

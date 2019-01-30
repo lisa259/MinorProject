@@ -1,3 +1,9 @@
+/*
+  Deze activity geeft van iedere lookbook de 1e drie items weer in een gridview.
+  Dit wordt gedaan met mbv LookbookAdapter.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -32,15 +38,17 @@ public class LookbookActivity extends AppCompatActivity {
         gvLookbook.setOnItemClickListener(new LookClickListener());
         gvLookbook.setOnItemLongClickListener(new LookLongClickListener());
 
+        // LookbookHelper voor het verwijderen van lookbooks
         request = new LookbookHelper(this);
     }
 
     public void onResume(){
         super.onResume();
+        // Gebruikersnaam ingelogde gebruiker verkrijgen
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
 
-        // Cursor select alle lookbooks uit database
+        // Cursor select alle lookbooks uit database van gebruiker
         cursor = db.selectLookbook(db, gebruikersnaam);
         cursor.moveToFirst();
 
@@ -69,6 +77,7 @@ public class LookbookActivity extends AppCompatActivity {
     private class LookClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            // Achterhaal geselecteerde lookbook
             Cursor item = (Cursor) adapterView.getItemAtPosition(i);
 
             Intent intent = new Intent(LookbookActivity.this, OutfitActivity.class);
@@ -81,14 +90,14 @@ public class LookbookActivity extends AppCompatActivity {
     private class LookLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-            // Delete look
+            // Achterhaal selecteerde lookbook
             Cursor look = (Cursor) adapterView.getItemAtPosition(i);
             int id = look.getInt(look.getColumnIndex("_id"));
 
-            // verwijder geselecteerde item van server
+            // verwijder geselecteerde look van server
             request.deleteLookbook(id);
 
-            // verwijder selecteerde item uit database
+            // verwijder selecteerde look uit database
             db.delete("lookbook", id);
             onResume();
             return true;

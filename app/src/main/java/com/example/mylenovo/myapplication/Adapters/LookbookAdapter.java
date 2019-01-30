@@ -1,3 +1,8 @@
+/*
+  Deze adapter set meerdere bitmaps op meerdere imageviews.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Adapters;
 
 import android.content.Context;
@@ -30,14 +35,15 @@ public class LookbookAdapter extends ResourceCursorAdapter {
         ImageView ivLookbook3 = view.findViewById(R.id.IVLookbook3);
         ImageView ivLookbook4 = view.findViewById(R.id.IVLookbook4);
 
+        // Id's van de items van het lookbook ophalen
         String items = cursor.getString(cursor.getColumnIndex("items"));
 
-        // aantal items bepalen
+        // Aantal items bepalen
         int aantalItems = items.split(",").length;
         List<String> list = new ArrayList<String>(Arrays.asList(items.split(",")));
 
-        // altijd minimaal 1, dus 1e altijd setten
-        // select item met 1e id in list
+        // Er is altijd minimaal 1 item, dus 1e item/foto altijd setten
+        // Select item met 1e id in list
         Cursor cursor1 = db.selectItemById(db, Integer.valueOf(list.get(0)));
         cursor1.moveToFirst();
         String foto1 = cursor1.getString(cursor1.getColumnIndex("foto"));
@@ -49,7 +55,7 @@ public class LookbookAdapter extends ResourceCursorAdapter {
         ivLookbook1.setImageBitmap(fotoBitmap1);
 
         if (aantalItems > 1) {
-            // select item met 1e id in list
+            // select item met 2e id in list
             Cursor cursor2 = db.selectItemById(db, Integer.valueOf(list.get(1)));
             cursor2.moveToFirst();
             String foto2 = cursor2.getString(cursor2.getColumnIndex("foto"));
@@ -61,7 +67,7 @@ public class LookbookAdapter extends ResourceCursorAdapter {
             ivLookbook2.setImageBitmap(fotoBitmap2);
         }
         if (aantalItems > 2) {
-            // select item met 1e id in list
+            // select item met 3e id in list
             Cursor cursor3 = db.selectItemById(db, Integer.valueOf(list.get(2)));
             cursor3.moveToFirst();
             String foto3 = cursor3.getString(cursor3.getColumnIndex("foto"));
@@ -73,7 +79,7 @@ public class LookbookAdapter extends ResourceCursorAdapter {
             ivLookbook3.setImageBitmap(fotoBitmap3);
         }
         if (aantalItems > 3) {
-            // select item met 1e id in list
+            // select item met 4e id in list
             Cursor cursor4 = db.selectItemById(db, Integer.valueOf(list.get(3)));
             cursor4.moveToFirst();
             String foto4 = cursor4.getString(cursor4.getColumnIndex("foto"));

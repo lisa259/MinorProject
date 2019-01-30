@@ -1,6 +1,10 @@
-package com.example.mylenovo.myapplication.Helpers;
+/*
+  Deze helper maakt contact met de items pagina van de server.
+  Het getten, posten, putten en deleten van items is allemaal mogelijk.
+  @author      Lisa
+ */
 
-// HEADERS MET COMMENTS!
+package com.example.mylenovo.myapplication.Helpers;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -37,7 +41,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         this.context = inputContext;
     }
 
-    // Get Items from url. Using interface Callback
+    // Get items van server/url. Maak gebruik van callback
     public void getItems(ItemHelper.Callback inputActivity) {
         this.activity = inputActivity;
         queue = Volley.newRequestQueue(context);
@@ -45,6 +49,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
                 null, this, this);
 
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         jsonObjectRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -73,7 +78,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         activity.gotItemsError(error.getMessage());
     }
 
-
+    // Post items op server/url
     public void postItems(final String gebruikersnaam, final String categorie, final String foto,
                           final String merk, final String locatie) {
         queue = Volley.newRequestQueue(context);
@@ -102,6 +107,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             return data;
         }
         };
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         postRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -119,6 +125,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         queue.add(postRequest);
     }
 
+    // Delete items op server/url
     public void deleteItems(int id){
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items/" + Integer.toString(id);
@@ -136,6 +143,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             }
         }
         ){  @Override
+            // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
             protected Response<String> parseNetworkResponse(NetworkResponse response){
                 String responseString = "";
                 if (response != null) {
@@ -161,6 +169,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         queue.add(deleteRequest);
     }
 
+    // Put items op server/url
     public void putItems(final int id, final  String gebruikersnaam, final String categorie,
                          final String merk, final String foto, final String locatie){
         queue = Volley.newRequestQueue(context);
@@ -189,6 +198,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
                 return data;
             }
         };
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         putRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {

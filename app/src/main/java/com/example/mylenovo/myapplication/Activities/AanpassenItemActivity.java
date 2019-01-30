@@ -1,3 +1,10 @@
+/*
+  Deze acitivity geeft de mogelijkheid om een item aan te passen.
+  Hierbij kunnen de foto, categorie en het merk aangepast worden.
+  Vervolgens wordt de informatie geupdate op de server en in de database.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -46,6 +53,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
         etMerk = (EditText) findViewById(R.id.ETMerk2);
         etCategorie = (EditText) findViewById(R.id.ETCategorie2);
 
+        // ItemHelper voor de put request naar de server
         request = new ItemHelper(this);
     }
 
@@ -54,9 +62,11 @@ public class AanpassenItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
 
+        // Select item met id
         Cursor cursor = Database.selectItemById(db, id);
         cursor.moveToFirst();
 
+        // Informatie van het item ophalen van de cursor
         gebruikersnaam = cursor.getString(cursor.getColumnIndex("gebruikersnaam"));
         locatie = cursor.getString(cursor.getColumnIndex("locatie"));
         fotoString = cursor.getString(cursor.getColumnIndex("foto"));
@@ -65,6 +75,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
         byte[] b = Base64.decode(fotoString, Base64.URL_SAFE);
         Bitmap fotoBitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
 
+        // Informatie setten
         ivItem.setImageBitmap(fotoBitmap);
         etMerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
         etCategorie.setText(cursor.getString(cursor.getColumnIndex("categorie")));
@@ -76,6 +87,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
     }
 
     private void openGallery(){
+        // Openen van de gallerij
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
@@ -83,11 +95,13 @@ public class AanpassenItemActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // Er is een foto in de gallerij geselecteerd
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            // Set de geselecteerde foto
             imageUri = data.getData();
             ivItem.setImageURI(imageUri);
 
-            // convert Uri to bitmap to string
+            // convert Uri naar bitmap naar string, zodat het opgeslagen kan worden op de server
             try {
                 Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(
                         this.getContentResolver(), imageUri);
@@ -105,7 +119,7 @@ public class AanpassenItemActivity extends AppCompatActivity {
         categorie = etCategorie.getText().toString();
         merk = etMerk.getText().toString();
 
-        // Checken of alles is ingevuld, foto niet checken, want die kan niet verwijderd worden.
+        // Checken of alles is ingevuld. foto niet checken, want die kan niet verwijderd worden
         if (!categorie.equals("") && !merk.equals("")) {
             // server updaten, put request
             request.putItems(id, gebruikersnaam, categorie, merk, fotoString, locatie);

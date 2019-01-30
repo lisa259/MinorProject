@@ -1,3 +1,8 @@
+/*
+  Deze adapter set een bitmap op een imageview.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Adapters;
 
 import android.content.Context;

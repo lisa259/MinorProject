@@ -1,3 +1,10 @@
+/*
+  Deze activity geeft de garderobe weer.
+  Hierbij wordt de spinner met categorieën gevuld.
+  Wanneer er een categorie is aangeklikt, wordt de gridview gevuld met items.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -42,16 +49,20 @@ public class GarderobeActivity extends AppCompatActivity {
         spCategorie = (Spinner) findViewById(R.id.SPCategorie);
         spCategorie.setOnItemSelectedListener(new SpinnerClickListener());
 
+        // ItemHelper request voor het verwijderen van items
         request = new ItemHelper(this);
     }
 
     public void onResume(){
         super.onResume();
+        // Gebruikersnaam ingelogde gebruiker ophalen
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
 
+        // Alle categorieën van de gebruiker uit de garderobe ophalen
         Cursor cursor = Database.selectCategorieen(db, gebruikersnaam, "garderobe");
 
+        // Alle categorieën in cursor in arraylist stoppen
         ArrayList<String> categorieen = new ArrayList<String>();
         try {
             while (cursor.moveToNext()) {
@@ -60,6 +71,8 @@ public class GarderobeActivity extends AppCompatActivity {
         } finally {
             cursor.close();
         }
+
+        // Categorieën toekennen aan de spinner
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
                 categorieen);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -85,11 +98,15 @@ public class GarderobeActivity extends AppCompatActivity {
     private class SpinnerClickListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parentView, View view, int position, long id) {
-            // vul gridview met alle items in selecteerde categorie
+            // Geselecteerde categorie achterhalen
             selectCategorie = spCategorie.getSelectedItem().toString();
-            Cursor cursor = Database.selectItems(db, gebruikersnaam, selectCategorie, "garderobe");
+
+            // Alle items van ingelogde gebruiker in garderobe van geselecteerde categorie verkrijgen
+            Cursor cursor = Database.selectItems(db, gebruikersnaam, selectCategorie,
+                    "garderobe");
             cursor.moveToFirst();
 
+            // Set de items in cursor op de gridview
             adapter = new GridFotoAdapter(GarderobeActivity.this, cursor);
             gvGarderobe.setAdapter(adapter);
         }
@@ -102,6 +119,7 @@ public class GarderobeActivity extends AppCompatActivity {
     private class ItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            // Achterhaal het geselecteerde item
             Cursor item = (Cursor) adapterView.getItemAtPosition(i);
 
             Intent intent = new Intent(GarderobeActivity.this, ItemActivity.class);
@@ -113,6 +131,7 @@ public class GarderobeActivity extends AppCompatActivity {
     private class ItemLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            // Achterhaal het geselecteerde item
             Cursor item = (Cursor) adapterView.getItemAtPosition(i);
             int id = item.getInt(item.getColumnIndex("_id"));
 

@@ -1,3 +1,8 @@
+/*
+  Deze activity geeft een nieuwe gebruiker de mogelijkheid om een account te maken.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -30,6 +35,7 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registreer);
 
+        // LoginHelper voor het getten en posten
         request = new LoginHelper(this);
     }
 
@@ -75,16 +81,18 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
                     bruikbaar = false;
                 }
             } catch (JSONException e) {
-                Toast.makeText(this, "Inloggen is op het moment niet mogelijk", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Inloggen is op het moment niet mogelijk",
+                        Toast.LENGTH_LONG).show();
             }
         }
         if (bruikbaar) {
-            // toevoegen aan server mbv post request
+            // Ingelogde gebruiker opslaan
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("gebruikersnaam", gebruikersnaam);
             editor.commit();
 
+            // toevoegen aan server mbv post request
             request.postLogins(gebruikersnaam, email, wachtwoord1);
             Intent intent = new Intent(this, GarderobeActivity.class);
             startActivity(intent);

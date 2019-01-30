@@ -1,3 +1,9 @@
+/*
+  Deze activity geeft de optie een nieuw item toe te voegen.
+  Deze wordt opgeslagen op de server en in de database.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -23,7 +29,6 @@ import java.io.ByteArrayOutputStream;
 
 import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
-
 public class NieuwItemActivity extends AppCompatActivity {
 
     ImageView ivItem;
@@ -47,11 +52,13 @@ public class NieuwItemActivity extends AppCompatActivity {
         etMerk = (EditText) findViewById(R.id.ETMerk);
         etCategorie = (EditText) findViewById(R.id.ETCategorie);
 
+        // ItemHelper voor het posten van het nieuwe item
         request = new ItemHelper(this);
     }
 
     public void onResume(){
         super.onResume();
+        // Ophalen locatie van nieuwe item (garderobe/wishlist)
         Intent intent = getIntent();
         locatie = intent.getStringExtra("locatie");
     }
@@ -62,6 +69,7 @@ public class NieuwItemActivity extends AppCompatActivity {
     }
 
     private void openGallery(){
+        // Openen van de gallerij
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
@@ -70,6 +78,7 @@ public class NieuwItemActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            // Toekennen gekozen foto
             imageUri = data.getData();
             ivItem.setImageURI(imageUri);
         }
@@ -81,9 +90,10 @@ public class NieuwItemActivity extends AppCompatActivity {
 
         // is alles ingevuld?
         if (!categorie.equals("") && !merk.equals("") && imageUri != null) {
-            // convert Uri to bitmap to string
+            // convert Uri naar bitmap naar string
             try {
-                Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                        imageUri);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] b = baos.toByteArray();
@@ -92,13 +102,14 @@ public class NieuwItemActivity extends AppCompatActivity {
                 Toast.makeText(this, "foto opslaan mislukt", Toast.LENGTH_LONG).show();
             }
 
+            // Achterhaal gebruikersnaam ingelogde gebruiker
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
             gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
 
-            // Post item op
+            // Post item op server
             request.postItems(gebruikersnaam, categorie, fotoString, merk, locatie);
 
-            // Als server leeg is, wordt het id 1, want 1e item
+            // Als server leeg is, wordt het id 1, want het is het eerste item
             int id = 1;
 
             // Als server niet leeg is, vind eerste ongebruike id

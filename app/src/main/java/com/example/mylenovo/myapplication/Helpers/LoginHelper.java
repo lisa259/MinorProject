@@ -1,3 +1,9 @@
+/*
+  Deze helper maakt contact met de inlog pagina van de server.
+  Het getten en posten van inloggegevens is beide mogelijk.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Helpers;
 
 import android.content.Context;
@@ -32,7 +38,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
         this.context = inputContext;
     }
 
-    // Get Logins from url. Using interface Callback
+    // Get logins van server/url. Maak gebruik van callback
     public void getLogins(LoginHelper.Callback inputActivity) {
         this.activity = inputActivity;
         queue = Volley.newRequestQueue(context);
@@ -40,6 +46,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
                 null, this, this);
 
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         jsonObjectRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -68,8 +75,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
         activity.gotLogins(response);
     }
 
-
-
+    // Post logins op server/url
     public void postLogins(final String gebruikersnaam, final String email, final String wachtwoord) {
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
@@ -98,6 +104,7 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
                 return data;
             }
         };
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         postRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -112,7 +119,6 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
 
             }
         });
-
         queue.add(postRequest);
     }
 }

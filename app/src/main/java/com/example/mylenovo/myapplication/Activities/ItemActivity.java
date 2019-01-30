@@ -1,3 +1,9 @@
+/*
+  Deze activity geeft informatie over een eerder geselecteerd item weer.
+  Hierbij een knop om naar AanpassenItemActivity te gaan.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -40,8 +46,11 @@ public class ItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
 
+        // Wanneer er vanuit de garderobe/wishlist op een item is geklikt, de optie om aan te passen
         Button aanpassen = (Button) findViewById(R.id.BTNaanpassen);
         aanpassen.setVisibility(View.VISIBLE);
+
+        // Wanneer er vanuit het lookbook op een item is geklikt, niet de optie om aan te passen
         if(intent.hasExtra("optie")) {
             optie = intent.getStringExtra("optie");
             idLook = intent.getIntExtra("idLook", 0);
@@ -49,6 +58,7 @@ public class ItemActivity extends AppCompatActivity {
             aanpassen.setVisibility(View.INVISIBLE);
         }
 
+        // Verkrijg alle info van het item met id
         cursor = Database.selectItemById(db, id);
         cursor.moveToFirst();
 
@@ -58,21 +68,15 @@ public class ItemActivity extends AppCompatActivity {
         byte[] b = Base64.decode(fotoString, Base64.URL_SAFE);
         Bitmap fotoBitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
 
+        // Set alle informatie
         ivFoto.setImageBitmap(fotoBitmap);
         tvMerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
     }
 
     public void clickAanpassen(View v){
-        // open aanpasscherm, vul items in
-        Intent intent;
-        if (optie != null) {
-            intent = new Intent(this, OutfitActivity.class);
-            intent.putExtra("optie", optie);
-            intent.putExtra("id", idLook);
-        } else {
-            intent = new Intent(this, AanpassenItemActivity.class);
-            intent.putExtra("id", id);
-        }
+        // open aanpasscherm
+        Intent intent = new Intent(this, AanpassenItemActivity.class);
+        intent.putExtra("id", id);
         startActivity(intent);
     }
 }

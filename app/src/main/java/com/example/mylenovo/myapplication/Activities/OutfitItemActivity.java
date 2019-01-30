@@ -1,3 +1,9 @@
+/*
+  Deze activity geeft de mogelijkheid een nieuw item toe te voegen aan een outfit.
+  (Of een nieuwe outfit te starten)
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -41,16 +47,20 @@ public class OutfitItemActivity extends AppCompatActivity {
         gvItems = (GridView) findViewById((R.id.GVItems));
         gvItems.setOnItemClickListener(new GvListener());
 
+        // LookbookHelper voor posten
         request = new LookbookHelper(this);
     }
 
     public void onResume(){
         super.onResume();
+        // Ophalen gebruikersnaam ingelogde gebruiker
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         gebruikersnaam = sharedPref.getString("gebruikersnaam", "default");
 
-        // spinner vullen met categorieen van beide locaties
+        // Categorieën van gebruiker van beide locaties(garderobe en wishlist) achterhalen
         Cursor cursor = Database.selectAllCategorieen(db, gebruikersnaam);
+
+        // Categorieën omzetten van cursor naar arraylist
         ArrayList<String> categorieen = new ArrayList<String>();
         try {
             while (cursor.moveToNext()) {
@@ -59,7 +69,10 @@ public class OutfitItemActivity extends AppCompatActivity {
         } finally {
             cursor.close();
         }
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categorieen);
+
+        // Toekennen categorieën aan spinner
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,
+                categorieen);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spItems.setAdapter(adapter);
     }
@@ -67,10 +80,14 @@ public class OutfitItemActivity extends AppCompatActivity {
     private class SpinnerClickListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            // vul gridview met alle items in selecteerde categorie, uit zowel garderobe als wishlist
+            // Verkrijgen geselecteerde categorie
             selectCategorie = spItems.getSelectedItem().toString();
+
+            // Select items van gebruiker uit selecteerde categorie (uit garderobe en wishlist)
             Cursor cursor = Database.selectAllItems(db, gebruikersnaam, selectCategorie);
             cursor.moveToFirst();
+
+            // Toekennen items aan gridview
             adapter = new GridFotoAdapter(OutfitItemActivity.this, cursor);
             gvItems.setAdapter(adapter);
         }
@@ -84,7 +101,7 @@ public class OutfitItemActivity extends AppCompatActivity {
     private class GvListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            // Item toevoegen aan look, id van item
+            // Item toevoegen aan look, id van item:
             Cursor item = (Cursor) adapterView.getItemAtPosition(i);
             int idItem = item.getInt(item.getColumnIndex("_id"));
 
@@ -116,11 +133,13 @@ public class OutfitItemActivity extends AppCompatActivity {
 
             } else {
                 // Item toevoegen aan bestaande look
-                id = intentGet.getIntExtra("idLookbook", 0); // geeft 0??
+                id = intentGet.getIntExtra("idLookbook", 0);
 
+                // Bestaande lookbook selecteren
                 Cursor cursor = db.selectLookbookById(db, id);
                 cursor.moveToFirst();
 
+                // items uitbreiden
                 String items = cursor.getString(cursor.getColumnIndex("items"));
                 String itemsnieuw = items + "," + Integer.toString(idItem);
 

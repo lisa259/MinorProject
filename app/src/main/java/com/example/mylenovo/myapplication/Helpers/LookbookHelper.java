@@ -1,3 +1,9 @@
+/*
+  Deze helper maakt contact met de lookbook pagina van de server.
+  Het getten, posten, putten en deleten van lookbooks is allemaal mogelijk.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Helpers;
 
 import android.content.Context;
@@ -34,7 +40,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
         this.context = inputContext;
     }
 
-    // Get lookbooks from url. Using interface Callback
+    // Get lookbooks van server/url. Maak gebruik van callback
     public void getLookbook(LookbookHelper.Callback inputActivity) {
         this.activity = inputActivity;
         queue = Volley.newRequestQueue(context);
@@ -42,6 +48,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
                 null, this, this);
 
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         jsonObjectRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -56,7 +63,6 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
 
             }
         });
-
         queue.add(jsonObjectRequest);
     }
 
@@ -70,7 +76,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
         activity.gotLookbookError(error.getMessage());
     }
 
-
+    // Post lookbook op server/url
     public void postLookbook(final String gebruikersnaam, final String items) {
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/lookbook";
@@ -95,6 +101,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
             return data;
         }
         };
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         postRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -112,6 +119,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
         queue.add(postRequest);
     }
 
+    // Delete lookbook van server/url
     public void deleteLookbook(int id){
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/lookbook/" + Integer.toString(id);
@@ -137,6 +145,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
             return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
         }
         };
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         deleteRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {
@@ -154,6 +163,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
         queue.add(deleteRequest);
     }
 
+    // Put lookbook op server/url
     public void putLookbook(final int id, final String items){
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/lookbook/" + Integer.toString(id);
@@ -179,6 +189,7 @@ public class LookbookHelper implements Response.Listener<JSONArray>, Response.Er
             return data;
         }
         };
+        // Vergroot de responsetijd, om runtime errors zoveel mogelijk te voorkomen
         putRequest.setRetryPolicy(new RetryPolicy() {
             @Override
             public int getCurrentTimeout() {

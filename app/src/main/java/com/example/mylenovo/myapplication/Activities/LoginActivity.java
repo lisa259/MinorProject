@@ -1,3 +1,9 @@
+/*
+  Deze activity laat de gebruiker inloggen.
+  Bij het openen van deze activity wordt de in-app database geleegd en opnieuw gevuld dmv request.
+  @author      Lisa
+ */
+
 package com.example.mylenovo.myapplication.Activities;
 
 import android.content.Intent;
@@ -36,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // requests voor het verkrijgen van data van de server
         request = new LoginHelper(this);
         requestItem = new ItemHelper(this);
         requestLookbook = new LookbookHelper(this);
@@ -44,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
     @Override
     public void onResume(){
         super.onResume();
+        // Initialiseer database
         db = Database.getInstance(getApplicationContext());
         requestItem.getItems(this);
         requestLookbook.getLookbook(this);
@@ -51,11 +59,11 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
 
     @Override
     public void gotLogins(JSONArray logins) {
-        // Check of ingevoerde gegevens overeenkomen met 1 van de logingegevens
         // ieder item in array afgaan
         for (int i = 0; i < logins.length(); i++){
             try {
                 JSONObject item = logins.getJSONObject(i);
+                // Check of ingevoerde gegevens overeenkomen met de logingegevens
                 if ((gebruikersnaam.equals(item.getString("gebruikersnaam")) ||
                         gebruikersnaam.equals(item.getString("email"))) &&
                         wachtwoord.equals(item.getString("wachtwoord"))) {
@@ -72,9 +80,11 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
                     startActivity(intent);
                 }
             } catch (JSONException e) {
-                Toast.makeText(this, "Inloggen is op het moment niet mogelijk", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Inloggen is op het moment niet mogelijk",
+                        Toast.LENGTH_LONG).show();
             }
         }
+        // Geen overeenkomende inloggegevens gevonden
         if (!inloggen) {
             Toast.makeText(this, "Inloggegevens kloppen niet", Toast.LENGTH_LONG).show();
         }
@@ -93,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         wachtwoord = etWachtwoord.getText().toString();
 
         if (!gebruikersnaam.isEmpty() && !wachtwoord.isEmpty()){
+            // Checken of gegevens kloppen
             request.getLogins(this);
         } else {
             Toast.makeText(this, "Voer eerst alle gegevens in", Toast.LENGTH_LONG).show();
@@ -130,11 +141,12 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         for (int i = 0; i < looks.length(); i++) {
             try {
                 JSONObject look = looks.getJSONObject(i);
-                // look opslaan in database
+                // lookbooks opslaan in database
                 db.insertLookbook(look.getInt("id"), look.getString("gebruikersnaam"),
                         look.getString("items"));
             } catch (JSONException e) {
-                Toast.makeText(this, "Kan lookbook niet ontvangen van server", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Kan lookbook niet ontvangen van server",
+                        Toast.LENGTH_LONG).show();
             }
         }
         Log.d("zoeken", "lookbook klaar");
