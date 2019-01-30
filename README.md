@@ -23,7 +23,7 @@ Wie herkent het niet? Het moment dat je niet weet wat voor outfit je aan moet tr
 - Outfit-item-scherm: Geeft de gebruiker de optie om een item aan een lookbook toe te voegen of om een nieuw lookbook te starten.  
   
 # Oplossing  
-[img]!()  
+![img](https://github.com/lisa259/MinorProject/blob/master/doc/eindscreen.png)  
   
 # Copyright  
 <b>Public domain release</b>  
