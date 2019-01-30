@@ -33,7 +33,7 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
         request = new LoginHelper(this);
     }
 
-    public void ClickAanmelden2(View v){
+    public void clickAanmelden2(View v){
         EditText ETgebruikersnaam = findViewById(R.id.ETgebruikersnaam2);
         EditText ETemail = findViewById(R.id.ETemail2);
         EditText ETwachtwoord1 = findViewById(R.id.ETwachtwoord2);
@@ -45,7 +45,8 @@ public class RegistreerActivity extends AppCompatActivity implements LoginHelper
         wachtwoord2 = ETwachtwoord2.getText().toString();
 
         // checken of alles is ingevuld
-        if (!gebruikersnaam.isEmpty() && !email.isEmpty() && !wachtwoord1.isEmpty() && !wachtwoord2.isEmpty()) {
+        if (!gebruikersnaam.isEmpty() && !email.isEmpty() && !wachtwoord1.isEmpty() &&
+                !wachtwoord2.isEmpty()) {
             // checken of wachtwoorden gelijk zijn
             if (wachtwoord1.equals(wachtwoord2)) {
                 // checken of gebruikersnaam en email nog niet gebruikt zijn

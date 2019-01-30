@@ -23,10 +23,10 @@ import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class WishlistActivity extends AppCompatActivity {
 
-    GridView GVWishlist;
+    GridView gvWishlist;
     ItemHelper request;
     String gebruikersnaam;
-    Spinner SPCategorie;
+    Spinner spCategorie;
     String selectCategorie;
     GridFotoAdapter adapter;
 
@@ -35,12 +35,12 @@ public class WishlistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
 
-        GVWishlist = (GridView) findViewById(R.id.GVWishlist);
-        GVWishlist.setOnItemClickListener(new ItemClickListener());
-        GVWishlist.setOnItemLongClickListener(new ItemLongClickListener());
+        gvWishlist = (GridView) findViewById(R.id.GVWishlist);
+        gvWishlist.setOnItemClickListener(new ItemClickListener());
+        gvWishlist.setOnItemLongClickListener(new ItemLongClickListener());
 
-        SPCategorie = (Spinner) findViewById(R.id.SPCategorie);
-        SPCategorie.setOnItemSelectedListener(new SpinnerClickListener());
+        spCategorie = (Spinner) findViewById(R.id.SPCategorie);
+        spCategorie.setOnItemSelectedListener(new SpinnerClickListener());
 
         request = new ItemHelper(this);
     }
@@ -62,35 +62,35 @@ public class WishlistActivity extends AppCompatActivity {
         }
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categorieen);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        SPCategorie.setAdapter(adapter);
+        spCategorie.setAdapter(adapter);
     }
 
-    public void ClickNieuwItem(View v){
+    public void clickNieuwItem(View v){
         Intent intent = new Intent(this, NieuwItemActivity.class);
         intent.putExtra("locatie", "wishlist");
         startActivity(intent);
     }
 
-    public void ClickGarderobe(View v){
+    public void clickGarderobe(View v){
         Intent intent = new Intent(this, GarderobeActivity.class);
         startActivity(intent);
     }
 
-    public void ClickLookbook(View v){
+    public void clickLookbook(View v){
         Intent intent = new Intent(this, LookbookActivity.class);
         startActivity(intent);
     }
 
     private class SpinnerClickListener implements AdapterView.OnItemSelectedListener {
         @Override
-        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+        public void onItemSelected(AdapterView<?> parentView, View view, int position, long id) {
             // vul gridview met alle items in selecteerde categorie
-            selectCategorie = SPCategorie.getSelectedItem().toString();
+            selectCategorie = spCategorie.getSelectedItem().toString();
             Cursor cursor = Database.selectItems(db, gebruikersnaam, selectCategorie, "wishlist");
             cursor.moveToFirst();
 
             adapter = new GridFotoAdapter(WishlistActivity.this, cursor);
-            GVWishlist.setAdapter(adapter);
+            gvWishlist.setAdapter(adapter);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parentView) {

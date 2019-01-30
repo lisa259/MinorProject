@@ -23,8 +23,8 @@ import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class OutfitItemActivity extends AppCompatActivity {
 
-    Spinner SPItems;
-    GridView GVItems;
+    Spinner spItems;
+    GridView gvItems;
     String gebruikersnaam;
     String selectCategorie;
     GridFotoAdapter adapter;
@@ -35,11 +35,11 @@ public class OutfitItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outfititem);
-        SPItems = (Spinner) findViewById(R.id.SPItems);
-        SPItems.setOnItemSelectedListener(new SpinnerClickListener());
+        spItems = (Spinner) findViewById(R.id.SPItems);
+        spItems.setOnItemSelectedListener(new SpinnerClickListener());
 
-        GVItems = (GridView) findViewById((R.id.GVItems));
-        GVItems.setOnItemClickListener(new GVListener());
+        gvItems = (GridView) findViewById((R.id.GVItems));
+        gvItems.setOnItemClickListener(new GvListener());
 
         request = new LookbookHelper(this);
     }
@@ -61,18 +61,18 @@ public class OutfitItemActivity extends AppCompatActivity {
         }
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categorieen);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        SPItems.setAdapter(adapter);
+        spItems.setAdapter(adapter);
     }
 
     private class SpinnerClickListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             // vul gridview met alle items in selecteerde categorie, uit zowel garderobe als wishlist
-            selectCategorie = SPItems.getSelectedItem().toString();
+            selectCategorie = spItems.getSelectedItem().toString();
             Cursor cursor = Database.selectAllItems(db, gebruikersnaam, selectCategorie);
             cursor.moveToFirst();
             adapter = new GridFotoAdapter(OutfitItemActivity.this, cursor);
-            GVItems.setAdapter(adapter);
+            gvItems.setAdapter(adapter);
         }
 
         @Override
@@ -81,7 +81,7 @@ public class OutfitItemActivity extends AppCompatActivity {
         }
     }
 
-    private class GVListener implements AdapterView.OnItemClickListener {
+    private class GvListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             // Item toevoegen aan look, id van item

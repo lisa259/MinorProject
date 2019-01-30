@@ -20,7 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback, ItemHelper.Callback, LookbookHelper.Callback {
+public class LoginActivity extends AppCompatActivity implements LoginHelper.Callback,
+        ItemHelper.Callback, LookbookHelper.Callback {
 
     LoginHelper request;
     ItemHelper requestItem;
@@ -55,7 +56,9 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         for (int i = 0; i < logins.length(); i++){
             try {
                 JSONObject item = logins.getJSONObject(i);
-                if ((gebruikersnaam.equals(item.getString("gebruikersnaam")) || gebruikersnaam.equals(item.getString("email"))) && wachtwoord.equals(item.getString("wachtwoord"))) {
+                if ((gebruikersnaam.equals(item.getString("gebruikersnaam")) ||
+                        gebruikersnaam.equals(item.getString("email"))) &&
+                        wachtwoord.equals(item.getString("wachtwoord"))) {
 
                     // Opslaan ingelogde gebruiker
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -82,12 +85,12 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         Toast.makeText(this, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
     }
 
-    public void ClickLogin(View v){
+    public void clickLogin(View v){
         // Is er iets ingevuld?
-        EditText ETgebruikersnaam = (EditText) findViewById(R.id.ETgebruikersnaam);
-        EditText ETwachtwoord = (EditText) findViewById(R.id.ETwachtwoord);
-        gebruikersnaam = ETgebruikersnaam.getText().toString();
-        wachtwoord = ETwachtwoord.getText().toString();
+        EditText etGebruikersnaam = (EditText) findViewById(R.id.ETgebruikersnaam);
+        EditText etWachtwoord = (EditText) findViewById(R.id.ETwachtwoord);
+        gebruikersnaam = etGebruikersnaam.getText().toString();
+        wachtwoord = etWachtwoord.getText().toString();
 
         if (!gebruikersnaam.isEmpty() && !wachtwoord.isEmpty()){
             request.getLogins(this);
@@ -96,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
         }
     }
 
-    public void ClickAanmelden1(View v){
+    public void clickAanmelden1(View v){
         Intent intent = new Intent(this, RegistreerActivity.class);
         startActivity(intent);
     }
@@ -107,7 +110,9 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
             try {
                 JSONObject item = items.getJSONObject(i);
                 // items opslaan in database
-                db.insertItem(item.getInt("id"), item.getString("gebruikersnaam"), item.getString("categorie"), item.getString("merk"), item.getString("foto"), item.getString("locatie"));
+                db.insertItem(item.getInt("id"), item.getString("gebruikersnaam"),
+                        item.getString("categorie"), item.getString("merk"),
+                        item.getString("foto"), item.getString("locatie"));
             } catch (JSONException e) {
                 Toast.makeText(this, "Kan items niet ontvangen van server", Toast.LENGTH_LONG).show();
             }
@@ -126,7 +131,8 @@ public class LoginActivity extends AppCompatActivity implements LoginHelper.Call
             try {
                 JSONObject look = looks.getJSONObject(i);
                 // look opslaan in database
-                db.insertLookbook(look.getInt("id"), look.getString("gebruikersnaam"), look.getString("items"));
+                db.insertLookbook(look.getInt("id"), look.getString("gebruikersnaam"),
+                        look.getString("items"));
             } catch (JSONException e) {
                 Toast.makeText(this, "Kan lookbook niet ontvangen van server", Toast.LENGTH_LONG).show();
             }

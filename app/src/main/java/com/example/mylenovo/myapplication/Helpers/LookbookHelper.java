@@ -1,7 +1,5 @@
 package com.example.mylenovo.myapplication.Helpers;
 
-// HEADERS MET COMMENTS!
-
 import android.content.Context;
 import android.widget.Toast;
 
@@ -21,27 +19,26 @@ import org.json.JSONArray;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorListener {
-
+public class LookbookHelper implements Response.Listener<JSONArray>, Response.ErrorListener{
     private Context context;
-    private ItemHelper.Callback activity;
+    private LookbookHelper.Callback activity;
     RequestQueue queue;
 
     public interface Callback {
-        void gotItems(JSONArray question);
-        void gotItemsError(String message);
+        void gotLookbook(JSONArray question);
+        void gotLookbookError(String message);
     }
 
     // Constructor
-    public ItemHelper (Context inputContext) {
+    public LookbookHelper (Context inputContext) {
         this.context = inputContext;
     }
 
-    // Get Items from url. Using interface Callback
-    public void getItems(ItemHelper.Callback inputActivity) {
+    // Get lookbooks from url. Using interface Callback
+    public void getLookbook(LookbookHelper.Callback inputActivity) {
         this.activity = inputActivity;
         queue = Volley.newRequestQueue(context);
-        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items";
+        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/lookbook";
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url,
                 null, this, this);
 
@@ -65,19 +62,18 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
 
     @Override
     public void onResponse(JSONArray response) {
-        activity.gotItems(response);
+        activity.gotLookbook(response);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        activity.gotItemsError(error.getMessage());
+        activity.gotLookbookError(error.getMessage());
     }
 
 
-    public void postItems(final String gebruikersnaam, final String categorie, final String foto,
-                          final String merk, final String locatie) {
+    public void postLookbook(final String gebruikersnaam, final String items) {
         queue = Volley.newRequestQueue(context);
-        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items";
+        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/lookbook";
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
             @Override
@@ -95,10 +91,7 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         protected Map<String, String> getParams() {
             Map<String, String> data = new HashMap<>();
             data.put("gebruikersnaam", gebruikersnaam);
-            data.put("categorie", categorie);
-            data.put("foto", foto);
-            data.put("merk", merk);
-            data.put("locatie", locatie);
+            data.put("items", items);
             return data;
         }
         };
@@ -119,9 +112,9 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         queue.add(postRequest);
     }
 
-    public void deleteItems(int id){
+    public void deleteLookbook(int id){
         queue = Volley.newRequestQueue(context);
-        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items/" + Integer.toString(id);
+        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/lookbook/" + Integer.toString(id);
         StringRequest deleteRequest = new StringRequest(Request.Method.DELETE, url,
                 new Response.Listener<String>() {
             @Override
@@ -136,13 +129,13 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             }
         }
         ){  @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response){
-                String responseString = "";
-                if (response != null) {
-                    responseString = String.valueOf(response.statusCode);
-                }
-                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+        protected Response<String> parseNetworkResponse(NetworkResponse response){
+            String responseString = "";
+            if (response != null) {
+                responseString = String.valueOf(response.statusCode);
             }
+            return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+        }
         };
         deleteRequest.setRetryPolicy(new RetryPolicy() {
             @Override
@@ -161,10 +154,9 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
         queue.add(deleteRequest);
     }
 
-    public void putItems(final int id, final  String gebruikersnaam, final String categorie,
-                         final String merk, final String foto, final String locatie){
+    public void putLookbook(final int id, final String items){
         queue = Volley.newRequestQueue(context);
-        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/items/" + Integer.toString(id);
+        String url = "https://ide50-lisabeek.legacy.cs50.io:8080/lookbook/" + Integer.toString(id);
         StringRequest putRequest = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
             @Override
@@ -180,14 +172,12 @@ public class ItemHelper implements Response.Listener<JSONArray>, Response.ErrorL
             }
         }
         ){  @Override
-            public Map<String, String> getParams() {
-                Map<String, String> data = new HashMap<String, String>();
-                data.put("categorie", categorie);
-                data.put("merk", merk);
-                data.put("foto", foto);
+        public Map<String, String> getParams() {
+            Map<String, String> data = new HashMap<String, String>();
+            data.put("items", items);
 
-                return data;
-            }
+            return data;
+        }
         };
         putRequest.setRetryPolicy(new RetryPolicy() {
             @Override

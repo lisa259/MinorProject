@@ -15,7 +15,7 @@ import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class OutfitActivity extends AppCompatActivity {
 
-    GridView GVOutfit;
+    GridView gvOutfit;
     int id;
     String optie;
     GridFotoAdapter adapter;
@@ -24,8 +24,8 @@ public class OutfitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outfit);
-        GVOutfit = (GridView) findViewById(R.id.GVOutfit);
-        GVOutfit.setOnItemClickListener(new ItemClickListener());
+        gvOutfit = (GridView) findViewById(R.id.GVOutfit);
+        gvOutfit.setOnItemClickListener(new ItemClickListener());
     }
 
     public void onResume(){
@@ -59,24 +59,16 @@ public class OutfitActivity extends AppCompatActivity {
 
             // set cursor met adapter to grid
             adapter = new GridFotoAdapter(this, cursor2);
-            GVOutfit.setAdapter(adapter);
+            gvOutfit.setAdapter(adapter);
         }
     }
 
-    public void ClickPlus2(View v){
+    public void clickPlus2(View v){
         Intent intent = new Intent(this, OutfitItemActivity.class);
         intent.putExtra("optie", optie);
         if (optie.equals("bestaat")) {
             intent.putExtra("idLookbook", id);
         }
-        startActivity(intent);
-    }
-
-    public void ClickVerwijderen2(View v){
-        // Of dit ook met longclick doen???
-        // Verwijder van server
-        // Verwijder uit database
-        Intent intent = new Intent(this, LookbookActivity.class);
         startActivity(intent);
     }
 

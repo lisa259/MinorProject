@@ -24,9 +24,9 @@ import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class AanpassenItemActivity extends AppCompatActivity {
 
-    ImageView IVItem;
-    EditText ETMerk;
-    EditText ETCategorie;
+    ImageView ivItem;
+    EditText etMerk;
+    EditText etCategorie;
     ItemHelper request;
     private static final int PICK_IMAGE = 100;
     Uri imageUri = null;
@@ -42,9 +42,9 @@ public class AanpassenItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aanpassen_item);
 
-        IVItem = (ImageView) findViewById(R.id.IVitem2);
-        ETMerk = (EditText) findViewById(R.id.ETMerk2);
-        ETCategorie = (EditText) findViewById(R.id.ETCategorie2);
+        ivItem = (ImageView) findViewById(R.id.IVitem2);
+        etMerk = (EditText) findViewById(R.id.ETMerk2);
+        etCategorie = (EditText) findViewById(R.id.ETCategorie2);
 
         request = new ItemHelper(this);
     }
@@ -65,12 +65,12 @@ public class AanpassenItemActivity extends AppCompatActivity {
         byte[] b = Base64.decode(fotoString, Base64.URL_SAFE);
         Bitmap fotoBitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
 
-        IVItem.setImageBitmap(fotoBitmap);
-        ETMerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
-        ETCategorie.setText(cursor.getString(cursor.getColumnIndex("categorie")));
+        ivItem.setImageBitmap(fotoBitmap);
+        etMerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
+        etCategorie.setText(cursor.getString(cursor.getColumnIndex("categorie")));
     }
 
-    public void ClickUpload3(View v){
+    public void clickUpload3(View v){
         // Open gallerij
         openGallery();
     }
@@ -85,11 +85,12 @@ public class AanpassenItemActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
-            IVItem.setImageURI(imageUri);
+            ivItem.setImageURI(imageUri);
 
             // convert Uri to bitmap to string
             try {
-                Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                Bitmap fotoBitmap = MediaStore.Images.Media.getBitmap(
+                        this.getContentResolver(), imageUri);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 fotoBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] b = baos.toByteArray();
@@ -100,9 +101,9 @@ public class AanpassenItemActivity extends AppCompatActivity {
         }
     }
 
-    public void ClickAanpassenItem(View v){
-        categorie = ETCategorie.getText().toString();
-        merk = ETMerk.getText().toString();
+    public void clickAanpassenItem(View v){
+        categorie = etCategorie.getText().toString();
+        merk = etMerk.getText().toString();
 
         // Checken of alles is ingevuld, foto niet checken, want die kan niet verwijderd worden.
         if (!categorie.equals("") && !merk.equals("")) {

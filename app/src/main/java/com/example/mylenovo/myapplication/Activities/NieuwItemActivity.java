@@ -26,9 +26,9 @@ import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class NieuwItemActivity extends AppCompatActivity {
 
-    ImageView IVItem;
-    EditText ETMerk;
-    EditText ETCategorie;
+    ImageView ivItem;
+    EditText etMerk;
+    EditText etCategorie;
     ItemHelper request;
     private static final int PICK_IMAGE = 100;
     Uri imageUri = null;
@@ -43,9 +43,9 @@ public class NieuwItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nieuw_item);
 
-        IVItem = (ImageView) findViewById(R.id.IVitem);
-        ETMerk = (EditText) findViewById(R.id.ETMerk);
-        ETCategorie = (EditText) findViewById(R.id.ETCategorie);
+        ivItem = (ImageView) findViewById(R.id.IVitem);
+        etMerk = (EditText) findViewById(R.id.ETMerk);
+        etCategorie = (EditText) findViewById(R.id.ETCategorie);
 
         request = new ItemHelper(this);
     }
@@ -56,7 +56,7 @@ public class NieuwItemActivity extends AppCompatActivity {
         locatie = intent.getStringExtra("locatie");
     }
 
-    public void ClickUpload2(View v){
+    public void clickUpload2(View v){
         // Open gallerij
         openGallery();
     }
@@ -71,13 +71,13 @@ public class NieuwItemActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
-            IVItem.setImageURI(imageUri);
+            ivItem.setImageURI(imageUri);
         }
     }
 
-    public void ClickToevoegen2(View v){
-        categorie = ETCategorie.getText().toString();
-        merk = ETMerk.getText().toString();
+    public void clickToevoegen2(View v){
+        categorie = etCategorie.getText().toString();
+        merk = etMerk.getText().toString();
 
         // is alles ingevuld?
         if (!categorie.equals("") && !merk.equals("") && imageUri != null) {

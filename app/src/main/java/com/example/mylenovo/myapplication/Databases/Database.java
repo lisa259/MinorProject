@@ -11,7 +11,8 @@ public class Database extends SQLiteOpenHelper {
 
     private static Database instance;
 
-    public Database(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public Database(@Nullable Context context, @Nullable String name,
+                    @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -39,7 +40,8 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    public void insertItem(int id, String gebruikersnaam, String categorie, String merk, String foto, String locatie){
+    public void insertItem(int id, String gebruikersnaam, String categorie, String merk,
+                           String foto, String locatie){
         SQLiteDatabase db = instance.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("_id", id);
@@ -60,29 +62,35 @@ public class Database extends SQLiteOpenHelper {
         db.insert("lookbook", null, values);
     }
 
-    public static Cursor selectItems(Database instance, String gebruikersnaam, String categorie, String locatie) {
+    public static Cursor selectItems(Database instance, String gebruikersnaam, String categorie,
+                                     String locatie) {
         SQLiteDatabase database = instance.getWritableDatabase();
-        return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ? AND locatie = ?", new String[] {gebruikersnaam, categorie, locatie});
+        return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ? " +
+                "AND locatie = ?", new String[] {gebruikersnaam, categorie, locatie});
     }
 
     public static Cursor selectLookbook(Database instance, String gebruikersnaam) {
         SQLiteDatabase database = instance.getWritableDatabase();
-        return database.rawQuery("SELECT * FROM lookbook WHERE gebruikersnaam = ?", new String[] {gebruikersnaam});
+        return database.rawQuery("SELECT * FROM lookbook WHERE gebruikersnaam = ?",
+                new String[]{gebruikersnaam});
     }
 
     public static Cursor selectAllItems(Database instance, String gebruikersnaam, String categorie) {
         SQLiteDatabase database = instance.getWritableDatabase();
-        return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ?", new String[] {gebruikersnaam, categorie});
+        return database.rawQuery("SELECT * FROM items WHERE gebruikersnaam = ? AND categorie = ?",
+                new String[] {gebruikersnaam, categorie});
     }
 
     public static Cursor selectCategorieen(Database instance, String gebruikersnaam, String locatie) {
         SQLiteDatabase database = instance.getWritableDatabase();
-        return database.rawQuery("SELECT DISTINCT categorie FROM items WHERE gebruikersnaam = ? AND locatie = ?", new String[] {gebruikersnaam, locatie});
+        return database.rawQuery("SELECT DISTINCT categorie FROM items WHERE gebruikersnaam = ? AND" +
+                " locatie = ?", new String[] {gebruikersnaam, locatie});
     }
 
     public static Cursor selectAllCategorieen(Database instance, String gebruikersnaam) {
         SQLiteDatabase database = instance.getWritableDatabase();
-        return database.rawQuery("SELECT DISTINCT categorie FROM items WHERE gebruikersnaam = ?", new String[] {gebruikersnaam});
+        return database.rawQuery("SELECT DISTINCT categorie FROM items WHERE gebruikersnaam = ?",
+                new String[] {gebruikersnaam});
     }
 
     public static Cursor selectMaxIdItems(Database instance) {

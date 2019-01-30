@@ -18,7 +18,7 @@ import static com.example.mylenovo.myapplication.Activities.LoginActivity.db;
 
 public class LookbookActivity extends AppCompatActivity {
 
-    GridView GVLookbook;
+    GridView gvLookbook;
     String gebruikersnaam;
     LookbookAdapter adapter;
     LookbookHelper request;
@@ -28,9 +28,9 @@ public class LookbookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lookbook);
-        GVLookbook = (GridView) findViewById(R.id.GVLookbook);
-        GVLookbook.setOnItemClickListener(new LookClickListener());
-        GVLookbook.setOnItemLongClickListener(new LookLongClickListener());
+        gvLookbook = (GridView) findViewById(R.id.GVLookbook);
+        gvLookbook.setOnItemClickListener(new LookClickListener());
+        gvLookbook.setOnItemLongClickListener(new LookLongClickListener());
 
         request = new LookbookHelper(this);
     }
@@ -46,22 +46,22 @@ public class LookbookActivity extends AppCompatActivity {
 
         // cursor toepassen op gv
         adapter = new LookbookAdapter(this, cursor);
-        GVLookbook.setAdapter(adapter);
+        gvLookbook.setAdapter(adapter);
 
     }
 
-    public void ClickPlus(View v){
+    public void clickPlus(View v){
         Intent intent = new Intent(this, OutfitActivity.class);
         intent.putExtra("optie", "nieuw");
         startActivity(intent);
     }
 
-    public void ClickGarderobe(View v){
+    public void clickGarderobe(View v){
         Intent intent = new Intent(this, GarderobeActivity.class);
         startActivity(intent);
     }
 
-    public void ClickWishlist(View v){
+    public void clickWishlist(View v){
         Intent intent = new Intent(this, WishlistActivity.class);
         startActivity(intent);
     }

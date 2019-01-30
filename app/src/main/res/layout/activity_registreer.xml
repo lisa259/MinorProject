@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".Activities.LookbookActivity$RegistreerActivity">
+    tools:context=".Activities.RegistreerActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -61,7 +61,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="50dp"
         android:gravity="center"
-        android:onClick="ClickAanmelden2"
+        android:onClick="clickAanmelden2"
         android:text="Aanmelden"
         android:textAlignment="center" />
 

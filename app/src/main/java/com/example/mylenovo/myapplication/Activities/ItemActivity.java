@@ -21,8 +21,8 @@ public class ItemActivity extends AppCompatActivity {
 
     int id;
     Cursor cursor;
-    ImageView IVfoto;
-    TextView TVmerk;
+    ImageView ivFoto;
+    TextView tvMerk;
     String optie;
     int idLook;
 
@@ -31,8 +31,8 @@ public class ItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
-        IVfoto = (ImageView) findViewById(R.id.IVitemfoto);
-        TVmerk = (TextView) findViewById(R.id.TVmerk);
+        ivFoto = (ImageView) findViewById(R.id.IVitemfoto);
+        tvMerk = (TextView) findViewById(R.id.TVmerk);
     }
 
     public void onResume(){
@@ -58,11 +58,11 @@ public class ItemActivity extends AppCompatActivity {
         byte[] b = Base64.decode(fotoString, Base64.URL_SAFE);
         Bitmap fotoBitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
 
-        IVfoto.setImageBitmap(fotoBitmap);
-        TVmerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
+        ivFoto.setImageBitmap(fotoBitmap);
+        tvMerk.setText(cursor.getString(cursor.getColumnIndex("merk")));
     }
 
-    public void ClickAanpassen(View v){
+    public void clickAanpassen(View v){
         // open aanpasscherm, vul items in
         Intent intent;
         if (optie != null) {

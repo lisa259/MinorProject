@@ -73,7 +73,8 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
     public void postLogins(final String gebruikersnaam, final String email, final String wachtwoord) {
         queue = Volley.newRequestQueue(context);
         String url = "https://ide50-lisabeek.legacy.cs50.io:8080/login";
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 // response
@@ -82,7 +83,8 @@ public class LoginHelper implements Response.Listener<JSONArray>, Response.Error
             @Override
             public void onErrorResponse(VolleyError error) {
                 // error
-                Toast.makeText(context, "Kan geen verbinding maken met de server", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Kan geen verbinding maken met de server",
+                        Toast.LENGTH_LONG).show();
             }
         }
         ){  @Override

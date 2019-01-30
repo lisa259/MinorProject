@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="15dp"
     android:orientation="vertical"
-    tools:context=".Activities.LookbookActivity$WishlistActivity">
+    tools:context=".Activities.WishlistActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="0.01"
             android:clickable="true"
-            android:onClick="ClickNieuwItem"
+            android:onClick="clickNieuwItem"
             app:backgroundTint="?attr/colorBackgroundFloating"
             app:srcCompat="@android:drawable/ic_input_add" />
 
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="ClickGarderobe"
+            android:onClick="clickGarderobe"
             android:text="Garderobe" />
 
         <Button
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="ClickLookbook"
+            android:onClick="clickLookbook"
             android:text="Lookbook" />
     </LinearLayout>
 
