@@ -61,7 +61,7 @@ public class LookbookAdapter extends ResourceCursorAdapter {
             String foto2 = cursor2.getString(cursor2.getColumnIndex("foto"));
 
             // String to bitmap
-            byte[] b2 = Base64.decode(foto1, Base64.URL_SAFE);
+            byte[] b2 = Base64.decode(foto2, Base64.URL_SAFE);
             Bitmap fotoBitmap2 = BitmapFactory.decodeByteArray(b2, 0, b2.length);
 
             ivLookbook2.setImageBitmap(fotoBitmap2);
@@ -85,7 +85,7 @@ public class LookbookAdapter extends ResourceCursorAdapter {
             String foto4 = cursor4.getString(cursor4.getColumnIndex("foto"));
 
             // String to bitmap
-            byte[] b4 = Base64.decode(foto1, Base64.URL_SAFE);
+            byte[] b4 = Base64.decode(foto4, Base64.URL_SAFE);
             Bitmap fotoBitmap4 = BitmapFactory.decodeByteArray(b4, 0, b4.length);
 
             ivLookbook4.setImageBitmap(fotoBitmap4);
