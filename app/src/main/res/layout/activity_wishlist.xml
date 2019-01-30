@@ -23,7 +23,8 @@
             android:text="         Wishlist"
             android:textAlignment="center"
             android:textSize="28dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/FBNieuwItem"
@@ -64,7 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="clickGarderobe"
-            android:text="Garderobe" />
+            android:text="Garderobe"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/button5"
@@ -72,7 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="clickLookbook"
-            android:text="Lookbook" />
+            android:text="Lookbook"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
 </LinearLayout>

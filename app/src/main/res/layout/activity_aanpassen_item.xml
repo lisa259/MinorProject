@@ -16,7 +16,8 @@
         android:text="Item aanpassen"
         android:textAlignment="center"
         android:textSize="28dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <ImageView
         android:id="@+id/IVitem2"
@@ -32,7 +33,9 @@
         android:layout_gravity="center"
         android:layout_marginBottom="15dp"
         android:onClick="clickUpload3"
-        android:text="Verander foto" />
+        android:text="Verander foto"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"/>
 
     <EditText
         android:id="@+id/ETCategorie2"
@@ -41,7 +44,8 @@
         android:layout_marginBottom="10dp"
         android:ems="10"
         android:hint="Categorie"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="#808080"/>
 
     <EditText
         android:id="@+id/ETMerk2"
@@ -50,7 +54,8 @@
         android:layout_marginBottom="10dp"
         android:ems="10"
         android:hint="Merk"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="#808080"/>
 
     <Button
         android:id="@+id/button7"
@@ -58,5 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="clickAanpassenItem"
-        android:text="Aanpassen" />
+        android:text="Aanpassen"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"/>
 </LinearLayout>

@@ -16,7 +16,8 @@
         android:text="Item"
         android:textAlignment="center"
         android:textSize="28dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"/>
 
     <ImageView
         android:id="@+id/IVitemfoto"
@@ -40,6 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="clickAanpassen"
-        android:text="Aanpassen" />
+        android:text="Aanpassen"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"/>
 
 </LinearLayout>

@@ -23,7 +23,8 @@
             android:text="         Lookbook"
             android:textAlignment="center"
             android:textSize="28dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton2"
@@ -57,7 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="clickGarderobe"
-            android:text="Garderobe" />
+            android:text="Garderobe"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/button4"
@@ -65,7 +68,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="clickWishlist"
-            android:text="Wishlist" />
+            android:text="Wishlist"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
 
     </LinearLayout>
 

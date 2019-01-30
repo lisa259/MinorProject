@@ -23,7 +23,8 @@
             android:text="         Garderobe"
             android:textAlignment="center"
             android:textSize="28dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/FBNieuwItem"
@@ -43,7 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:outlineSpotShadowColor="@android:color/black"/>
 
     <GridView
         android:id="@+id/GVGarderobe"
@@ -64,7 +66,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="clickWishlist"
-            android:text="Wishlist" />
+            android:text="Wishlist"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
 
         <Button
             android:id="@+id/button5"
@@ -72,7 +76,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="clickLookbook"
-            android:text="Lookbook" />
+            android:text="Lookbook"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
 </LinearLayout>

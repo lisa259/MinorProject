@@ -16,7 +16,8 @@
         android:text="Inloggen"
         android:textAlignment="center"
         android:textSize="28dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:id="@+id/ETgebruikersnaam"
@@ -25,7 +26,8 @@
         android:layout_marginBottom="10dp"
         android:ems="10"
         android:hint="Gebruikersnaam/email"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="#808080"/>
 
     <EditText
         android:id="@+id/ETwachtwoord"
@@ -34,7 +36,8 @@
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="Wachtwoord"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="#808080" />
 
     <Button
         android:id="@+id/button"
@@ -45,7 +48,9 @@
         android:gravity="center"
         android:onClick="clickLogin"
         android:text="Log in"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:id="@+id/textView4"
@@ -62,6 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="clickAanmelden1"
-        android:text="Aanmelden" />
+        android:text="Aanmelden"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"/>
 
 </LinearLayout>
