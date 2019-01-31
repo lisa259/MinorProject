@@ -7,6 +7,8 @@ Programmeerproject
 Minor Programmeren  
 Universiteit van Amsterdam  
   
+https://youtu.be/qQvzsfuXLOM
+  
 # Doel
 Wie herkent het niet? Het moment dat je niet weet wat voor outfit je aan moet trekken. Het gevoel dat er iets ontbreekt in je kledingkast. Een nieuwe blik op de kleding die je bezit.  
   
